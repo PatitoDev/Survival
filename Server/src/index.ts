@@ -1,7 +1,11 @@
+import { env } from 'process';
 import { WebSocketServer, WebSocket, MessageEvent } from 'ws';
 
+const PORT = Number.parseInt(env['PORT'] ?? '8080');
+console.log('starting server on port: ', PORT);
+
 const PING_TIMEOUT = 10000;
-const ws = new WebSocketServer({ port: 9999 });
+const ws = new WebSocketServer({ port: PORT });
 let host: {
     ws: WebSocket,
     name: string,
