@@ -1,0 +1,121 @@
+[gd_scene load_steps=10 format=3 uid="uid://dulm82dftahtg"]
+
+[ext_resource type="Script" path="res://User/User.gd" id="1_8v7hb"]
+[ext_resource type="Texture2D" uid="uid://dxkj7msjh51ux" path="res://User/Img/duck.png" id="2_ir458"]
+[ext_resource type="FontFile" uid="uid://d2a5cbt4cly6k" path="res://Font/Pixellari.ttf" id="3_qtjfw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4sop5"]
+radius = 7.0
+height = 36.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gjry5"]
+size = Vector2(16, 10.5)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_drlhf"]
+radius = 9.0
+height = 32.0
+
+[sub_resource type="Animation" id="Animation_dneog"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("KickHitBox/HitCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_nnh82"]
+resource_name = "Kick"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("KickHitBox/HitCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5xx0x"]
+_data = {
+"Kick": SubResource("Animation_nnh82"),
+"RESET": SubResource("Animation_dneog")
+}
+
+[node name="User" type="CharacterBody2D"]
+texture_filter = 1
+script = ExtResource("1_8v7hb")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -18)
+shape = SubResource("CapsuleShape2D_4sop5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -20)
+texture = ExtResource("2_ir458")
+vframes = 4
+
+[node name="Label" type="Label" parent="."]
+offset_left = -36.0
+offset_top = -46.0
+offset_right = 35.0
+offset_bottom = -35.0
+theme_override_fonts/font = ExtResource("3_qtjfw")
+theme_override_font_sizes/font_size = 8
+horizontal_alignment = 1
+
+[node name="KickHitBox" type="Area2D" parent="." groups=["hit"]]
+
+[node name="HitCollision" type="CollisionShape2D" parent="KickHitBox"]
+position = Vector2(-7, -16)
+shape = SubResource("RectangleShape2D_gjry5")
+disabled = true
+debug_color = Color(0.831373, 0, 0.945098, 0.419608)
+
+[node name="HurtBox" type="Area2D" parent="." groups=["hurt"]]
+
+[node name="HurtCollilsion" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, -16)
+shape = SubResource("CapsuleShape2D_drlhf")
+debug_color = Color(0.8, 0.419608, 0, 0.419608)
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5xx0x")
+}
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

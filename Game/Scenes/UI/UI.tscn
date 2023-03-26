@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://chhuoerfm5wmw"]
+
+[ext_resource type="FontFile" uid="uid://d2a5cbt4cly6k" path="res://Font/Pixellari.ttf" id="1_6nm0u"]
+[ext_resource type="Script" path="res://Scenes/UI/UI.gd" id="1_x4f7h"]
+
+[node name="UI" type="Node2D"]
+script = ExtResource("1_x4f7h")
+
+[node name="WinsLabel" type="Label" parent="."]
+offset_left = 203.0
+offset_top = 7.0
+offset_right = 314.0
+offset_bottom = 18.0
+theme_override_fonts/font = ExtResource("1_6nm0u")
+theme_override_font_sizes/font_size = 7
+text = "Niv3k_el_pato WINS 0"
+horizontal_alignment = 2
+clip_text = true
+
+[node name="TimeLeftLabel" type="Label" parent="."]
+offset_left = 203.0
+offset_top = 17.0
+offset_right = 314.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("1_6nm0u")
+theme_override_font_sizes/font_size = 7
+text = "Time Left: 0"
+horizontal_alignment = 2
+clip_text = true

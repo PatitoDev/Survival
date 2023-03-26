@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://bnn4wu8ngykc1"]
+
+[ext_resource type="Script" path="res://Scenes/Arena/Arena.gd" id="1_tsg4w"]
+[ext_resource type="PackedScene" uid="uid://bnfy2ihtvu6xx" path="res://Scenes/Lobby/Lobby.tscn" id="3_pjvhs"]
+[ext_resource type="PackedScene" uid="uid://chhuoerfm5wmw" path="res://Scenes/UI/UI.tscn" id="4_qkbl1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_63eou"]
+size = Vector2(473, 20)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_tsg4w")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -18.0
+offset_top = -16.0
+offset_right = 330.0
+offset_bottom = 203.0
+color = Color(0.215686, 0.164706, 0.223529, 1)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(206, 179)
+shape = SubResource("RectangleShape2D_63eou")
+
+[node name="PlayerSpawner" type="Node2D" parent="."]
+
+[node name="Lobby" parent="." instance=ExtResource("3_pjvhs")]
+
+[node name="UI" parent="." instance=ExtResource("4_qkbl1")]

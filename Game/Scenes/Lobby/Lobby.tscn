@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnfy2ihtvu6xx"]
+
+[ext_resource type="Script" path="res://Scenes/Lobby/Lobby.gd" id="1_rlkyp"]
+[ext_resource type="FontFile" uid="uid://d2a5cbt4cly6k" path="res://Font/Pixellari.ttf" id="2_8hyq3"]
+
+[node name="Lobby" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_rlkyp")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 11.0
+offset_top = 8.0
+offset_right = 146.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("2_8hyq3")
+theme_override_font_sizes/font_size = 12
+text = "Waiting for Host"
+
+[node name="Controls" type="Node2D" parent="."]
+
+[node name="LineEdit" type="LineEdit" parent="Controls"]
+offset_left = 13.0
+offset_top = 29.0
+offset_right = 95.0
+offset_bottom = 49.0
+theme_override_fonts/font = ExtResource("2_8hyq3")
+theme_override_font_sizes/font_size = 12
+placeholder_text = "Player name"
+alignment = 1
+max_length = 10
+
+[node name="Button" type="Button" parent="Controls"]
+offset_left = 17.0
+offset_top = 58.0
+offset_right = 73.0
+offset_bottom = 82.0
+theme_override_fonts/font = ExtResource("2_8hyq3")
+theme_override_font_sizes/font_size = 15
+disabled = true
+text = "Fight"
+
+[connection signal="text_changed" from="Controls/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="Controls/Button" to="." method="_on_button_pressed"]
