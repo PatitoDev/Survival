@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2hfcf5880nfl"]
+
+[ext_resource type="Script" path="res://Scenes/Leaderboard/Leaderboard.gd" id="1_ad7sw"]
+[ext_resource type="Texture2D" uid="uid://lko4bagg08ux" path="res://Scenes/Leaderboard/Img/tablero.png" id="2_4c22j"]
+[ext_resource type="FontFile" uid="uid://d2a5cbt4cly6k" path="res://Font/Pixellari.ttf" id="3_d5c1w"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_viuyh"]
+font = ExtResource("3_d5c1w")
+font_size = 7
+font_color = Color(0, 0, 0, 1)
+
+[node name="Leaderboard" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_ad7sw")
+
+[node name="Tablero" type="Sprite2D" parent="."]
+texture = ExtResource("2_4c22j")
+
+[node name="ThirdPlace" type="Label" parent="."]
+offset_left = -59.0
+offset_top = 21.0
+offset_right = 61.0
+offset_bottom = 36.0
+text = "15W Niv3kElPato"
+label_settings = SubResource("LabelSettings_viuyh")
+vertical_alignment = 1
+clip_text = true
+
+[node name="FirstPlace" type="Label" parent="."]
+offset_left = -59.0
+offset_top = -9.0
+offset_right = 60.0
+offset_bottom = 6.0
+text = "60W Niv3kElPato"
+label_settings = SubResource("LabelSettings_viuyh")
+vertical_alignment = 1
+clip_text = true
+
+[node name="SecondPlace" type="Label" parent="."]
+offset_left = -59.0
+offset_top = 6.0
+offset_right = 60.0
+offset_bottom = 21.0
+text = "25W Niv3kElPato"
+label_settings = SubResource("LabelSettings_viuyh")
+vertical_alignment = 1
+clip_text = true

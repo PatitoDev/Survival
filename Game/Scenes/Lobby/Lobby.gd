@@ -1,8 +1,8 @@
 extends Node2D
 
 @onready var stateLabel = $Label;
-@onready var fightBtn = $Controls/Button;
-@onready var lobbyControls = $Controls;
+@onready var fightBtn = $FormStack/Button;
+@onready var lobbyControls = $FormStack;
 
 func _ready() -> void:
 	Game.OnGameStateChanged.connect(_onStateChange);

@@ -1,13 +1,15 @@
 extends Node
 
-const GAME_DURATION = 5;
+const GAME_DURATION = 60;
 
-@onready var PlayerScene = preload("res://User/User.tscn");
+@onready var PlayerScene = preload("res://Entity/User/User.tscn");
+@onready var ShoeScene = preload("res://Entity/Shoe/Shoe.tscn");
 
 var p1;
 var p2;
-@onready var lobby = $Lobby;
-@onready var PlayerSpawner = $PlayerSpawner
+@onready var lobby = $Camera/Lobby;
+@onready var PlayerSpawner = $PlayerSpawner;
+@onready var Camera = $Camera;
 
 var timer = null;
 
@@ -17,7 +19,7 @@ func _ready():
 
 func _process(delta: float) -> void:
 	if (timer):
-		$UI.updateTimeLeft(timer.time_left);
+		$Camera/UI.updateTimeLeft(timer.time_left);
 
 func startTimer():
 	timer = get_tree().create_timer(GAME_DURATION);
@@ -31,6 +33,7 @@ func updateScene(state):
 		PlayerSpawner.remove_child(child);
 
 	if (Game.currentState == Game.GAME_STATE.WAITING_FOR_HOST):
+		Camera.setPlayers();
 		if (timer):
 			timer.unreference();
 			timer = null;
@@ -47,6 +50,8 @@ func updateScene(state):
 		p1.direction = User.DIRECTION.RIGHT;
 		if (Game.isHost()):
 			p1.updateLabel(Game.playerName);
+		Camera.setPlayers(p1);
+		p1.OnShoeFire.connect(onUserShoeFire);
 		return;
 
 	if (Game.currentState == Game.GAME_STATE.FIGHTING):
@@ -70,7 +75,19 @@ func updateScene(state):
 		if (Game.isClient()):
 			p1.position = Vector2(274, 158);
 			p2.position = Vector2(55, 158);
+		Camera.setPlayers(p1, p2);
+		p1.OnShoeFire.connect(onUserShoeFire);
+		p2.OnShoeFire.connect(onUserShoeFire);
 		return;
+
+func onUserShoeFire(user: User, spawnPointer: Node2D):
+	var shoe = ShoeScene.instantiate();
+	shoe.position = spawnPointer.position;
+	var shoeForce = 600;
+	if (user.direction == User.DIRECTION.LEFT):
+		shoeForce = shoeForce * -1;
+	add_child(shoe);
+	shoe.applyImpulse(Vector2(shoeForce, 0));
 
 func onReceivedSynchronizationData(data: Dictionary):
 	var playerType = data.content.playerType;

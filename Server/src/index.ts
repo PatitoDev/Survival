@@ -210,6 +210,7 @@ ws.on('connection', (wsclient) => {
         }
 
         if (type === 'game-sync') {
+            console.log(parsedMessage);
             for (let conn of connections) {
                 if (conn.ws !== wsclient) {
                     conn.ws.send(

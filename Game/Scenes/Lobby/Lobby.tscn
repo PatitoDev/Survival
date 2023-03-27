@@ -1,43 +1,103 @@
-[gd_scene load_steps=3 format=3 uid="uid://bnfy2ihtvu6xx"]
+[gd_scene load_steps=15 format=3 uid="uid://bnfy2ihtvu6xx"]
 
 [ext_resource type="Script" path="res://Scenes/Lobby/Lobby.gd" id="1_rlkyp"]
+[ext_resource type="Texture2D" uid="uid://bv0w04j8twa6k" path="res://Scenes/Lobby/formstack.png" id="2_2t7fx"]
 [ext_resource type="FontFile" uid="uid://d2a5cbt4cly6k" path="res://Font/Pixellari.ttf" id="2_8hyq3"]
+[ext_resource type="FontFile" uid="uid://teimplwodatw" path="res://Font/Creattion Demo.otf" id="4_a3gxt"]
+[ext_resource type="Texture2D" uid="uid://5l4pf28t2u2p" path="res://Scenes/Lobby/ticket.png" id="5_7p88y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_du8bq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w187m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1m65v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tum1k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ktvdn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nddw0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ad0gc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3hd1n"]
+font = ExtResource("2_8hyq3")
+font_size = 6
+
+[sub_resource type="LabelSettings" id="LabelSettings_2gqk6"]
+font = ExtResource("2_8hyq3")
+font_size = 10
+font_color = Color(0, 0, 0, 1)
 
 [node name="Lobby" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_rlkyp")
 
-[node name="Label" type="Label" parent="."]
-offset_left = 11.0
-offset_top = 8.0
-offset_right = 146.0
-offset_bottom = 23.0
-theme_override_fonts/font = ExtResource("2_8hyq3")
-theme_override_font_sizes/font_size = 12
-text = "Waiting for Host"
+[node name="FormStack" type="Node2D" parent="."]
+position = Vector2(24, -2)
 
-[node name="Controls" type="Node2D" parent="."]
+[node name="Formstack" type="Sprite2D" parent="FormStack"]
+position = Vector2(63, 86)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_2t7fx")
 
-[node name="LineEdit" type="LineEdit" parent="Controls"]
+[node name="LineEdit" type="LineEdit" parent="FormStack"]
 offset_left = 13.0
-offset_top = 29.0
-offset_right = 95.0
-offset_bottom = 49.0
-theme_override_fonts/font = ExtResource("2_8hyq3")
-theme_override_font_sizes/font_size = 12
-placeholder_text = "Player name"
+offset_top = 120.0
+offset_right = 94.0
+offset_bottom = 133.0
+rotation = 0.0925025
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
+theme_override_colors/font_uneditable_color = Color(0, 0, 0, 1)
+theme_override_colors/font_placeholder_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/caret_color = Color(0.101961, 0.101961, 0.101961, 1)
+theme_override_colors/selection_color = Color(0, 0, 0, 1)
+theme_override_colors/clear_button_color = Color(0, 0, 0, 1)
+theme_override_colors/clear_button_color_pressed = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a3gxt")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxEmpty_du8bq")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_w187m")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_1m65v")
 alignment = 1
 max_length = 10
 
-[node name="Button" type="Button" parent="Controls"]
-offset_left = 17.0
-offset_top = 58.0
-offset_right = 73.0
-offset_bottom = 82.0
-theme_override_fonts/font = ExtResource("2_8hyq3")
-theme_override_font_sizes/font_size = 15
+[node name="Button" type="Button" parent="FormStack"]
+offset_left = 9.0
+offset_top = 136.0
+offset_right = 15.0
+offset_bottom = 142.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tum1k")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ktvdn")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nddw0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ad0gc")
 disabled = true
-text = "Fight"
 
-[connection signal="text_changed" from="Controls/LineEdit" to="." method="_on_line_edit_text_changed"]
-[connection signal="pressed" from="Controls/Button" to="." method="_on_button_pressed"]
+[node name="Label" type="Label" parent="."]
+offset_left = 180.0
+offset_top = 169.0
+offset_right = 315.0
+offset_bottom = 184.0
+theme_override_fonts/font = ExtResource("2_8hyq3")
+text = "Waiting for Host"
+label_settings = SubResource("LabelSettings_3hd1n")
+horizontal_alignment = 2
+
+[node name="Ticket" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(230, 72)
+texture = ExtResource("5_7p88y")
+
+[node name="Label" type="Label" parent="Ticket"]
+offset_left = -11.0
+offset_top = -6.0
+offset_right = 10.0
+offset_bottom = 14.0
+text = "12"
+label_settings = SubResource("LabelSettings_2gqk6")
+horizontal_alignment = 1
+
+[connection signal="text_changed" from="FormStack/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="FormStack/Button" to="." method="_on_button_pressed"]

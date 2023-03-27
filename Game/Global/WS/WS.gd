@@ -1,6 +1,7 @@
 extends Node
 
 @export var url = "ws://localhost:9999";
+#@export var url = "wss://api.niv3kelpato.com";
 var client = WebSocketPeer.new();
 
 signal GenericMessage(data: Dictionary);
