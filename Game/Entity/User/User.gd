@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name User
 
-signal OnShoeFire(user: User, spawnPoint: Node2D);
+signal OnShoeFire(user: User, spawnPoint: Node2D, color: Color);
 
 enum PLAYER_STATE {
 	CROUCHING,
@@ -24,17 +24,21 @@ const JUMP_VELOCITY = -400.0
 @export var isPuppet = false;
 @onready var label = $Label;
 @onready var Sprite = $Sprite;
+@onready var OneShoeSprite = $OneShoe;
+@onready var BothShoesSprite = $BothShoes;
 @onready var animationTree: AnimationTree = $AnimationTree;
 @onready var stateMachine = animationTree["parameters/playback"];
 
 var playerState = PLAYER_STATE.STANDING;
 var direction = DIRECTION.LEFT;
+var shoes = 2;
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
 	updateState();
+	updateShoes(shoes);
 
 func updateLabel(text: String):
 	label.text = text;
@@ -69,13 +73,18 @@ func updateHurtCollision():
 		$HurtBox/HurtCollisionCrouched.disabled = true;
 
 func updateDirection():
-	Sprite.flip_h = (direction != DIRECTION.RIGHT);
 	if (direction == DIRECTION.RIGHT):
 		$KickHitBox.transform.x = Vector2(1, 0);
 		$MarkerContainer.transform.x = Vector2(1, 0);
+		Sprite.scale.x = 1;
+		BothShoesSprite.scale.x = 1;
+		OneShoeSprite.scale.x = 1;
 	else:
 		$KickHitBox.transform.x = Vector2(-1, 0);
 		$MarkerContainer.transform.x = Vector2(-1, 0);
+		Sprite.scale.x = -1;
+		BothShoesSprite.scale.x = -1;
+		OneShoeSprite.scale.x = -1;
 
 func _physics_process(delta: float) -> void:
 	if (isPuppet):
@@ -115,7 +124,35 @@ func handleInput():
 		if Input.is_action_pressed("ui_down"):
 			playerState = PLAYER_STATE.CROUCHING;
 		if Input.is_action_just_pressed("fireShoe"):
-			OnShoeFire.emit(self, $MarkerContainer/ShowSpawnerPosition);
+			if shoes > 0:
+				var shoeColor = $OneShoe.modulate;
+				if (shoes == 2):
+					shoeColor = $BothShoes.modulate;
+				removeShoe()
+				OnShoeFire.emit(self, $MarkerContainer/ShowSpawnerPosition, shoeColor);
+
+func addShoe(color: Color):
+	if (shoes == 1):
+		BothShoesSprite.modulate = color;
+	elif (shoes == 0):
+		OneShoeSprite.modulate = color;
+	updateShoes(shoes + 1);
+
+func removeShoe():
+	updateShoes(shoes - 1);
+
+func updateShoes(shoeAmount: int):
+	shoes = shoeAmount;
+	if (shoes == 1):
+		OneShoeSprite.visible = true;
+		BothShoesSprite.visible = false;
+	elif (shoes == 2):
+		BothShoesSprite.visible = true;
+		OneShoeSprite.visible = true;
+	else:
+		BothShoesSprite.visible = false;
+		OneShoeSprite.visible = false;
+
 
 func handleMovement(canMove: bool):
 	var directionVector := Input.get_axis("ui_left", "ui_right")
@@ -154,6 +191,17 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 
 	if (!area.is_in_group('hit')):
 		return;
+
 	var parent = area.get_parent();
 	if (parent is User && !parent.isPuppet):
 		Game.win();
+
+	if (area.is_in_group('shoe')):
+		Game.win();
+
+func _on_grab_area_area_entered(area: Area2D) -> void:
+	if (area.is_in_group('shoe') && area.is_in_group('grab')):
+		var shoe = area.get_parent().get_parent();
+		if (!shoe.isBeingFired && shoes < 2):
+			addShoe(shoe.getColor());
+			shoe.queue_free();

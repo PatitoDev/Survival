@@ -19,7 +19,8 @@ func _ready():
 
 func _process(delta: float) -> void:
 	if (timer):
-		$Camera/UI.updateTimeLeft(timer.time_left);
+		pass
+		#$Camera/UI.updateTimeLeft(timer.time_left);
 
 func startTimer():
 	timer = get_tree().create_timer(GAME_DURATION);
@@ -80,9 +81,10 @@ func updateScene(state):
 		p2.OnShoeFire.connect(onUserShoeFire);
 		return;
 
-func onUserShoeFire(user: User, spawnPointer: Node2D):
+func onUserShoeFire(user: User, spawnPointer: Node2D, shoeColor: Color):
 	var shoe = ShoeScene.instantiate();
-	shoe.position = spawnPointer.position;
+	shoe.position = spawnPointer.global_position;
+	shoe.setColor(shoeColor);
 	var shoeForce = 600;
 	if (user.direction == User.DIRECTION.LEFT):
 		shoeForce = shoeForce * -1;
