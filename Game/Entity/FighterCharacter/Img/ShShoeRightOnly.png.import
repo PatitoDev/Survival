@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cv1pe0v5dmrjw"
-path="res://.godot/imported/ShShoeRightOnly.png-7803c89f44ebc1e165cc7fedfbdbcfc3.ctex"
+path="res://.godot/imported/ShShoeRightOnly.png-8bf737b533e0af8a06f3a3fc31159dc6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Entity/User/Img/ShShoeRightOnly.png"
-dest_files=["res://.godot/imported/ShShoeRightOnly.png-7803c89f44ebc1e165cc7fedfbdbcfc3.ctex"]
+source_file="res://Entity/FighterCharacter/Img/ShShoeRightOnly.png"
+dest_files=["res://.godot/imported/ShShoeRightOnly.png-8bf737b533e0af8a06f3a3fc31159dc6.ctex"]
 
 [params]
 

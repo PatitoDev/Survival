@@ -1,17 +1,35 @@
-[gd_scene load_steps=6 format=3 uid="uid://ch3lrgfi2ri5o"]
+[gd_scene load_steps=8 format=3 uid="uid://ch3lrgfi2ri5o"]
 
 [ext_resource type="Script" path="res://Entity/Shoe/Shoe.gd" id="1_s37b5"]
 [ext_resource type="Texture2D" uid="uid://cflerfrbimgrl" path="res://Entity/Shoe/shoe.png" id="2_rpbge"]
+[ext_resource type="Script" path="res://Entity/Shoe/SyncData.gd" id="3_3aht7"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fg1l"]
 radius = 2.0
 height = 12.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2mg1n"]
-size = Vector2(14, 6)
+size = Vector2(16, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yt74c"]
 size = Vector2(22, 13.5)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_h702e"]
+properties/0/path = NodePath(".:syncPosition")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:color")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath(".:syncRotation")
+properties/2/spawn = true
+properties/2/sync = true
+properties/3/path = NodePath(".:syncIsBeingFired")
+properties/3/spawn = true
+properties/3/sync = true
+properties/4/path = NodePath(".:hasLoaded")
+properties/4/spawn = true
+properties/4/sync = true
 
 [node name="Shoe" type="Node2D"]
 texture_filter = 1
@@ -45,6 +63,12 @@ debug_color = Color(1, 0.278431, 0.803922, 0.419608)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody/GrabAreaBox"]
 shape = SubResource("RectangleShape2D_yt74c")
+
+[node name="SyncData" type="Node2D" parent="RigidBody"]
+script = ExtResource("3_3aht7")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="RigidBody/SyncData"]
+replication_config = SubResource("SceneReplicationConfig_h702e")
 
 [connection signal="body_entered" from="RigidBody" to="." method="_on_rigid_body_body_entered"]
 [connection signal="body_exited" from="RigidBody" to="." method="_on_rigid_body_body_exited"]

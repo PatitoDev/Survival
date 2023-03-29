@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cowyxkrg4c3bm"]
+
+[ext_resource type="Script" path="res://Global/Game.gd" id="1_3vrqn"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_35hrx"]
+properties/0/path = NodePath(".:gameState")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:p1Id")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath(".:p2Id")
+properties/2/spawn = true
+properties/2/sync = true
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_3vrqn")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_35hrx")

@@ -11,14 +11,13 @@ config_version=5
 [application]
 
 config/name="Survival"
-run/main_scene="res://Scenes/Arena/Arena.tscn"
+run/main_scene="res://Scenes/Lobby/Lobby.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-WS="*res://Global/WS/WS.tscn"
-Game="*res://Global/Game.gd"
+Network="*res://Global/Network/Network.tscn"
 
 [display]
 

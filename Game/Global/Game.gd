@@ -1,84 +1,46 @@
 extends Node
+class_name Game
 
 signal OnMatchRestart;
 signal OnGameStateChanged(state: GAME_STATE);
 
-var playerType = PLAYER_TYPE.WAITING;
-
-enum PLAYER_TYPE {
-	HOST,
-	CLIENT,
-	WAITING,
-}
-
 enum GAME_STATE {
-	WAITING_FOR_CLIENT,
-	WAITING_FOR_HOST,
 	FIGHTING,
+	PREPARING_FOR_FIGHT
 }
 
-var currentState = GAME_STATE.WAITING_FOR_HOST;
-var playerName = "";
+var gameState = GAME_STATE.PREPARING_FOR_FIGHT;
+
+var p1Id = null;
+var p2Id = null;
 
 func _ready():
-	WS.OnJoinConfirmation.connect(onJoinConfirmation);
-	WS.OnHostConfirmation.connect(onHostConfirmation);
-	WS.OnStateChanged.connect(_onStateChange);
-	WS.OnMatchOutcome.connect(_onMatchOutcome);
+	Network.OnQueueChange.connect(onQueueChange);
 
-func _onStateChange(data: Dictionary):
-	var gameState = data['data']['state'];
-	print('changed state to ', gameState);
-	match gameState:
-		'fighting':
-			currentState = GAME_STATE.FIGHTING;
-		'waiting-for-client':
-			currentState = GAME_STATE.WAITING_FOR_CLIENT;
-		'waiting-for-host':
-			currentState = GAME_STATE.WAITING_FOR_HOST;
-	OnGameStateChanged.emit(currentState);
+func onQueueChange():
+	if (p1Id != null and !Network.getClient(p1Id)):
+		# player has disconnected
+		p1Id = null;
 
-func _onMatchOutcome(data: Dictionary):
-	var hostWin = data['hostWin'];
-	var clientWin = data['clientWin'];
-	var hasWon = (Game.isClient() && clientWin) || (Game.isHost() && hostWin);
+	if (p2Id != null and !Network.getClient(p2Id)):
+		# player has disconnected
+		p2Id = null;
 
-	if (hasWon):
-		print('we have won');
-		currentState = GAME_STATE.WAITING_FOR_CLIENT;
-		playerType = PLAYER_TYPE.HOST;
-	else:
-		playerType = PLAYER_TYPE.WAITING;
+	if (p2Id == null and p1Id == null):
+		gameState = GAME_STATE.PREPARING_FOR_FIGHT;
 
-		if (clientWin || hostWin):
-			print('enemy has won');
-			currentState = GAME_STATE.WAITING_FOR_CLIENT;
-		else:
-			print('none has won');
-			currentState = GAME_STATE.WAITING_FOR_HOST;
+	if (gameState == GAME_STATE.PREPARING_FOR_FIGHT):
+		var lastClient = Network.getLastClientInQueue();
+		if (lastClient == null):
+			return;
+		if (p1Id == null):
+			p1Id = lastClient.name;
+			if (p1Id != null and p2Id != null):
+				gameState = GAME_STATE.FIGHTING;
+			return
 
-	OnGameStateChanged.emit(currentState);
-
-func win():
-	WS.sendEvent('win');
-
-func isHost():
-	return playerType == PLAYER_TYPE.HOST;
-
-func isClient():
-	return playerType == PLAYER_TYPE.CLIENT;
-
-func isViewer():
-	return playerType == PLAYER_TYPE.WAITING;
-
-func onJoinConfirmation(data: Dictionary):
-	print('set player as client');
-	playerType = PLAYER_TYPE.CLIENT;
-	currentState = GAME_STATE.FIGHTING;
-	OnGameStateChanged.emit(currentState);
-
-func onHostConfirmation(data: Dictionary):
-	print('set player as host');
-	playerType = PLAYER_TYPE.HOST;
-	currentState = GAME_STATE.WAITING_FOR_CLIENT;
-	OnGameStateChanged.emit(currentState);
+		if (p2Id == null):
+			p2Id = lastClient.name;
+			if (p1Id != null and p2Id != null):
+				gameState = GAME_STATE.FIGHTING;
+			return

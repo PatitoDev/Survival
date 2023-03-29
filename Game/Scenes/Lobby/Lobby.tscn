@@ -1,8 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://bnfy2ihtvu6xx"]
+[gd_scene load_steps=16 format=3 uid="uid://bnfy2ihtvu6xx"]
 
-[ext_resource type="Script" path="res://Scenes/Lobby/Lobby.gd" id="1_rlkyp"]
+[ext_resource type="Script" path="res://Scenes/Lobby/Lobby.gd" id="1_t7f2o"]
 [ext_resource type="Texture2D" uid="uid://bv0w04j8twa6k" path="res://Scenes/Lobby/formstack.png" id="2_2t7fx"]
 [ext_resource type="FontFile" uid="uid://d2a5cbt4cly6k" path="res://Font/Pixellari.ttf" id="2_8hyq3"]
+[ext_resource type="PackedScene" uid="uid://d27keetkmapul" path="res://Scenes/Arena/Arena.tscn" id="2_cyuyj"]
+[ext_resource type="Texture2D" uid="uid://dx16qmbvp3eih" path="res://Scenes/Lobby/table2.png" id="2_shrqe"]
 [ext_resource type="FontFile" uid="uid://teimplwodatw" path="res://Font/Creattion Demo.otf" id="4_a3gxt"]
 [ext_resource type="Texture2D" uid="uid://5l4pf28t2u2p" path="res://Scenes/Lobby/ticket.png" id="5_7p88y"]
 
@@ -20,10 +22,6 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ad0gc"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_3hd1n"]
-font = ExtResource("2_8hyq3")
-font_size = 6
-
 [sub_resource type="LabelSettings" id="LabelSettings_2gqk6"]
 font = ExtResource("2_8hyq3")
 font_size = 10
@@ -31,17 +29,29 @@ font_color = Color(0, 0, 0, 1)
 
 [node name="Lobby" type="Node2D"]
 texture_filter = 1
-script = ExtResource("1_rlkyp")
+script = ExtResource("1_t7f2o")
 
-[node name="FormStack" type="Node2D" parent="."]
-position = Vector2(24, -2)
+[node name="Main" parent="." instance=ExtResource("2_cyuyj")]
 
-[node name="Formstack" type="Sprite2D" parent="FormStack"]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Menu" type="Node2D" parent="CanvasLayer"]
+
+[node name="Table2" type="Sprite2D" parent="CanvasLayer/Menu"]
+position = Vector2(118, 90)
+scale = Vector2(0.382221, 0.382221)
+texture = ExtResource("2_shrqe")
+
+[node name="FormStack" type="Node2D" parent="CanvasLayer/Menu"]
+position = Vector2(56, 5)
+
+[node name="Formstack" type="Sprite2D" parent="CanvasLayer/Menu/FormStack"]
 position = Vector2(63, 86)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_2t7fx")
 
-[node name="LineEdit" type="LineEdit" parent="FormStack"]
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/Menu/FormStack"]
 offset_left = 13.0
 offset_top = 120.0
 offset_right = 94.0
@@ -64,7 +74,7 @@ theme_override_styles/read_only = SubResource("StyleBoxEmpty_1m65v")
 alignment = 1
 max_length = 10
 
-[node name="Button" type="Button" parent="FormStack"]
+[node name="Button" type="Button" parent="CanvasLayer/Menu/FormStack"]
 offset_left = 9.0
 offset_top = 136.0
 offset_right = 15.0
@@ -75,22 +85,11 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_nddw0")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ad0gc")
 disabled = true
 
-[node name="Label" type="Label" parent="."]
-offset_left = 180.0
-offset_top = 169.0
-offset_right = 315.0
-offset_bottom = 184.0
-theme_override_fonts/font = ExtResource("2_8hyq3")
-text = "Waiting for Host"
-label_settings = SubResource("LabelSettings_3hd1n")
-horizontal_alignment = 2
-
-[node name="Ticket" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(230, 72)
+[node name="Ticket" type="Sprite2D" parent="CanvasLayer/Menu"]
+position = Vector2(285, 28)
 texture = ExtResource("5_7p88y")
 
-[node name="Label" type="Label" parent="Ticket"]
+[node name="Label" type="Label" parent="CanvasLayer/Menu/Ticket"]
 offset_left = -11.0
 offset_top = -6.0
 offset_right = 10.0
@@ -99,5 +98,5 @@ text = "12"
 label_settings = SubResource("LabelSettings_2gqk6")
 horizontal_alignment = 1
 
-[connection signal="text_changed" from="FormStack/LineEdit" to="." method="_on_line_edit_text_changed"]
-[connection signal="pressed" from="FormStack/Button" to="." method="_on_button_pressed"]
+[connection signal="text_changed" from="CanvasLayer/Menu/FormStack/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="CanvasLayer/Menu/FormStack/Button" to="." method="_on_button_pressed"]

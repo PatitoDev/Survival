@@ -1,16 +1,14 @@
-[gd_scene load_steps=17 format=3 uid="uid://d27keetkmapul"]
+[gd_scene load_steps=16 format=3 uid="uid://d27keetkmapul"]
 
 [ext_resource type="Script" path="res://Scenes/Arena/Arena.gd" id="1_tsg4w"]
-[ext_resource type="Texture2D" uid="uid://biqqvibs6e05x" path="res://Scenes/Arena/Img/Light.png" id="2_8s82f"]
-[ext_resource type="Texture2D" uid="uid://cswftpbn0ithh" path="res://Scenes/Arena/Img/Background.png" id="3_f2pg1"]
-[ext_resource type="PackedScene" uid="uid://bnfy2ihtvu6xx" path="res://Scenes/Lobby/Lobby.tscn" id="3_pjvhs"]
+[ext_resource type="Texture2D" uid="uid://b0hp57e3nccjw" path="res://Light/lightmap.png" id="3_05v12"]
+[ext_resource type="PackedScene" uid="uid://ihfwa6o8dvuc" path="res://Entity/Light.tscn" id="4_3b16k"]
 [ext_resource type="Texture2D" uid="uid://dxakjpq5kop0y" path="res://Scenes/Arena/Img/hinchada.png" id="4_kb6vf"]
 [ext_resource type="Texture2D" uid="uid://bftrmwqbc2xob" path="res://Scenes/Arena/Img/wall.png" id="4_kqj2d"]
 [ext_resource type="Texture2D" uid="uid://bixaa8d6q3elg" path="res://Scenes/Arena/Img/Chair.png" id="4_kxhib"]
 [ext_resource type="PackedScene" uid="uid://c2hfcf5880nfl" path="res://Scenes/Leaderboard/Leaderboard.tscn" id="4_qkbl1"]
 [ext_resource type="Texture2D" uid="uid://qld6kyaddjbi" path="res://Scenes/Arena/Img/image.png" id="5_8j4fn"]
 [ext_resource type="PackedScene" uid="uid://x3gs7uy1lqdy" path="res://Entity/StrongDuckStanding/StrongDuckStanding.tscn" id="7_7k7vg"]
-[ext_resource type="PackedScene" uid="uid://cwnkethhdclbo" path="res://Entity/Camera/Camera.tscn" id="7_afa4g"]
 [ext_resource type="PackedScene" uid="uid://ddtkwyrgq26fg" path="res://Entity/StrongDuck/StrongDuck.tscn" id="8_a5auf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8iwsr"]
@@ -35,6 +33,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_618rm"]
+size = Vector2(1233, 11)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_63eou"]
 size = Vector2(2283, 20)
 
@@ -42,36 +43,136 @@ size = Vector2(2283, 20)
 texture_filter = 1
 script = ExtResource("1_tsg4w")
 
+[node name="WaitingCharacterSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Entity/LobbyCharacter/LobbyCharacter.tscn")
+spawn_path = NodePath("../World/WaitCharacterSpawner")
+
+[node name="FighterSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Entity/FighterCharacter/FighterCharacter.tscn")
+spawn_path = NodePath("../CanvasLayer/PlayerSpawner")
+
+[node name="ShoeMultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Entity/Shoe/Shoe.tscn")
+spawn_path = NodePath("../CanvasLayer/ShoeSpawner")
+
 [node name="World" type="Node2D" parent="."]
 
 [node name="Bg" type="ColorRect" parent="World"]
 offset_left = -997.0
-offset_top = -61.0
+offset_top = -348.0
 offset_right = 1234.0
 offset_bottom = 203.0
 color = Color(0.215686, 0.164706, 0.223529, 1)
+
+[node name="Ceilling" type="ColorRect" parent="World"]
+offset_left = -1037.0
+offset_top = -486.0
+offset_right = 1292.0
+color = Color(0.0941176, 0.0666667, 0.0980392, 1)
 
 [node name="Floor" type="ColorRect" parent="World"]
 offset_left = -978.0
 offset_top = 138.0
 offset_right = 1253.0
 offset_bottom = 402.0
-color = Color(0.470588, 0.513726, 0.454902, 1)
+color = Color(0.388235, 0.364706, 0.270588, 1)
 
-[node name="Background" type="Sprite2D" parent="World"]
-visible = false
-position = Vector2(154, 85.5)
-texture = ExtResource("3_f2pg1")
+[node name="Wall" type="Node2D" parent="World"]
 
-[node name="Background2" type="Sprite2D" parent="World"]
-visible = false
-position = Vector2(-234, 85.5)
-texture = ExtResource("3_f2pg1")
+[node name="Wall" type="Sprite2D" parent="World/Wall"]
+position = Vector2(235, 53.5)
+texture = ExtResource("4_kqj2d")
 
-[node name="Background3" type="Sprite2D" parent="World"]
-visible = false
-position = Vector2(543, 85.5)
-texture = ExtResource("3_f2pg1")
+[node name="Wall2" type="Sprite2D" parent="World/Wall"]
+position = Vector2(22, 54.5)
+texture = ExtResource("4_kqj2d")
+
+[node name="Wall3" type="Sprite2D" parent="World/Wall"]
+position = Vector2(-187, 53.5)
+texture = ExtResource("4_kqj2d")
+
+[node name="Wall4" type="Sprite2D" parent="World/Wall"]
+position = Vector2(-462, 50.5)
+texture = ExtResource("4_kqj2d")
+
+[node name="Wall5" type="Sprite2D" parent="World/Wall"]
+position = Vector2(-678, 48.5)
+texture = ExtResource("4_kqj2d")
+
+[node name="Wall6" type="Sprite2D" parent="World/Wall"]
+position = Vector2(-899, 53.5)
+texture = ExtResource("4_kqj2d")
+
+[node name="Wall7" type="Sprite2D" parent="World/Wall"]
+position = Vector2(-1132, 55.5)
+texture = ExtResource("4_kqj2d")
+
+[node name="Wall8" type="Sprite2D" parent="World/Wall"]
+position = Vector2(472, 40.5)
+texture = ExtResource("4_kqj2d")
+
+[node name="Wall9" type="Sprite2D" parent="World/Wall"]
+position = Vector2(711, 50.5)
+texture = ExtResource("4_kqj2d")
+
+[node name="Wall10" type="Sprite2D" parent="World/Wall"]
+position = Vector2(964, 65.5)
+texture = ExtResource("4_kqj2d")
+
+[node name="Wall11" type="Sprite2D" parent="World/Wall"]
+position = Vector2(1216, 49.5)
+texture = ExtResource("4_kqj2d")
+
+[node name="FloorLight" type="Node2D" parent="World"]
+position = Vector2(0, -44)
+
+[node name="PointLight2D2" type="PointLight2D" parent="World/FloorLight"]
+position = Vector2(176, 238)
+texture = ExtResource("3_05v12")
+texture_scale = 0.6
+height = 476.0
+
+[node name="PointLight2D3" type="PointLight2D" parent="World/FloorLight"]
+position = Vector2(-74, 231)
+texture = ExtResource("3_05v12")
+texture_scale = 0.6
+height = 476.0
+
+[node name="PointLight2D4" type="PointLight2D" parent="World/FloorLight"]
+position = Vector2(-312, 244)
+texture = ExtResource("3_05v12")
+texture_scale = 0.6
+height = 476.0
+
+[node name="PointLight2D5" type="PointLight2D" parent="World/FloorLight"]
+position = Vector2(485, 260)
+texture = ExtResource("3_05v12")
+texture_scale = 0.6
+height = 476.0
+
+[node name="PointLight2D6" type="PointLight2D" parent="World/FloorLight"]
+position = Vector2(837, 269)
+texture = ExtResource("3_05v12")
+texture_scale = 0.6
+height = 476.0
+
+[node name="Light2" parent="World" instance=ExtResource("4_3b16k")]
+position = Vector2(20, 7)
+
+[node name="Light6" parent="World" instance=ExtResource("4_3b16k")]
+position = Vector2(-280, 7)
+
+[node name="Light7" parent="World" instance=ExtResource("4_3b16k")]
+position = Vector2(-562, 7)
+
+[node name="Light3" parent="World" instance=ExtResource("4_3b16k")]
+position = Vector2(256, 7)
+
+[node name="Light4" parent="World" instance=ExtResource("4_3b16k")]
+position = Vector2(559, 7)
+
+[node name="Light5" parent="World" instance=ExtResource("4_3b16k")]
+position = Vector2(843, 7)
 
 [node name="Chair" type="Node2D" parent="World"]
 position = Vector2(0, -4)
@@ -150,35 +251,8 @@ position = Vector2(113, 117)
 sprite_frames = SubResource("SpriteFrames_jngw3")
 frame_progress = 0.974198
 
-[node name="Wall2" type="Node2D" parent="World"]
-
-[node name="Image" type="Sprite2D" parent="World/Wall2"]
-position = Vector2(157, 152)
-texture = ExtResource("5_8j4fn")
-
-[node name="Image2" type="Sprite2D" parent="World/Wall2"]
-position = Vector2(-231, 152)
-texture = ExtResource("5_8j4fn")
-
-[node name="Image3" type="Sprite2D" parent="World/Wall2"]
-position = Vector2(545, 153)
-texture = ExtResource("5_8j4fn")
-
-[node name="Light" type="Sprite2D" parent="World"]
-position = Vector2(325, 7)
-texture = ExtResource("2_8s82f")
-
-[node name="Light2" type="Sprite2D" parent="World"]
-position = Vector2(32, 7)
-texture = ExtResource("2_8s82f")
-
-[node name="Light3" type="Sprite2D" parent="World"]
-position = Vector2(-111, 6)
-texture = ExtResource("2_8s82f")
-
-[node name="Light4" type="Sprite2D" parent="World"]
-position = Vector2(-251, 7)
-texture = ExtResource("2_8s82f")
+[node name="WaitCharacterSpawner" type="Node2D" parent="World"]
+position = Vector2(159, 69)
 
 [node name="StrongDuckStanding" parent="World" instance=ExtResource("7_7k7vg")]
 position = Vector2(282, 94)
@@ -192,53 +266,19 @@ position = Vector2(-66, 148)
 [node name="StrongDuck2" parent="World" instance=ExtResource("8_a5auf")]
 position = Vector2(390, 148)
 
-[node name="Wall" type="Node2D" parent="World"]
+[node name="CanvasModulate" type="CanvasModulate" parent="World"]
+color = Color(0.560784, 0.552941, 0.54902, 1)
 
-[node name="Wall" type="Sprite2D" parent="World/Wall"]
-position = Vector2(235, 53.5)
-texture = ExtResource("4_kqj2d")
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(191, 116)
+collision_layer = 4
+collision_mask = 4
 
-[node name="Wall2" type="Sprite2D" parent="World/Wall"]
-position = Vector2(22, 54.5)
-texture = ExtResource("4_kqj2d")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+position = Vector2(-24.5, 16)
+shape = SubResource("RectangleShape2D_618rm")
 
-[node name="Wall3" type="Sprite2D" parent="World/Wall"]
-position = Vector2(-187, 53.5)
-texture = ExtResource("4_kqj2d")
-
-[node name="Wall4" type="Sprite2D" parent="World/Wall"]
-position = Vector2(-462, 50.5)
-texture = ExtResource("4_kqj2d")
-
-[node name="Wall5" type="Sprite2D" parent="World/Wall"]
-position = Vector2(-678, 48.5)
-texture = ExtResource("4_kqj2d")
-
-[node name="Wall6" type="Sprite2D" parent="World/Wall"]
-position = Vector2(-899, 53.5)
-texture = ExtResource("4_kqj2d")
-
-[node name="Wall7" type="Sprite2D" parent="World/Wall"]
-position = Vector2(-1132, 55.5)
-texture = ExtResource("4_kqj2d")
-
-[node name="Wall8" type="Sprite2D" parent="World/Wall"]
-position = Vector2(472, 40.5)
-texture = ExtResource("4_kqj2d")
-
-[node name="Wall9" type="Sprite2D" parent="World/Wall"]
-position = Vector2(711, 50.5)
-texture = ExtResource("4_kqj2d")
-
-[node name="Wall10" type="Sprite2D" parent="World/Wall"]
-position = Vector2(964, 65.5)
-texture = ExtResource("4_kqj2d")
-
-[node name="Wall11" type="Sprite2D" parent="World/Wall"]
-position = Vector2(1216, 49.5)
-texture = ExtResource("4_kqj2d")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["wall"]]
 position = Vector2(0, 8)
 collision_layer = 3
 
@@ -246,29 +286,49 @@ collision_layer = 3
 position = Vector2(139.5, 171)
 shape = SubResource("RectangleShape2D_63eou")
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+[node name="StaticBody2D2" type="StaticBody2D" parent="." groups=["wall"]]
 rotation = 1.5708
 collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
-position = Vector2(151, 67)
+position = Vector2(128, -30.0005)
 shape = SubResource("RectangleShape2D_63eou")
 
-[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+[node name="StaticBody2D3" type="StaticBody2D" parent="." groups=["wall"]]
 rotation = 1.5708
 collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
-position = Vector2(163, -388)
+position = Vector2(139.999, -278.001)
 shape = SubResource("RectangleShape2D_63eou")
 
-[node name="PlayerSpawner" type="Node2D" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
 
-[node name="Leaderboard" parent="." instance=ExtResource("4_qkbl1")]
+[node name="Leaderboard" parent="CanvasLayer" instance=ExtResource("4_qkbl1")]
+visible = false
 position = Vector2(215, 20)
 
-[node name="Camera" parent="." instance=ExtResource("7_afa4g")]
-position = Vector2(160, 90)
+[node name="Divider" type="Node2D" parent="CanvasLayer"]
 
-[node name="Lobby" parent="Camera" instance=ExtResource("3_pjvhs")]
-position = Vector2(-160, -90)
+[node name="Image" type="Sprite2D" parent="CanvasLayer/Divider"]
+texture_filter = 1
+position = Vector2(157, 152)
+texture = ExtResource("5_8j4fn")
+
+[node name="Image2" type="Sprite2D" parent="CanvasLayer/Divider"]
+texture_filter = 1
+position = Vector2(-231, 152)
+texture = ExtResource("5_8j4fn")
+
+[node name="Image3" type="Sprite2D" parent="CanvasLayer/Divider"]
+texture_filter = 1
+position = Vector2(545, 152)
+texture = ExtResource("5_8j4fn")
+
+[node name="ShoeSpawner" type="Node2D" parent="CanvasLayer"]
+texture_filter = 1
+
+[node name="PlayerSpawner" type="Node2D" parent="CanvasLayer"]
+texture_filter = 1
+position = Vector2(178, 34)

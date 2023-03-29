@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbpxrjyj4gkkv"]
+
+[ext_resource type="Script" path="res://Global/UserData/UserData.gd" id="1_yakgr"]
+[ext_resource type="Script" path="res://Global/UserData/Data.gd" id="2_6cjf8"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2qakc"]
+properties/0/path = NodePath(".:displayName")
+properties/0/spawn = true
+properties/0/sync = true
+
+[node name="UserData" type="Node2D"]
+script = ExtResource("1_yakgr")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_2qakc")
+
+[node name="Data" type="Node2D" parent="."]
+script = ExtResource("2_6cjf8")
