@@ -20,7 +20,7 @@ func _ready():
 	if multiplayer.is_server():
 		Network.NewRegisteredUser.connect(_onNewUser);
 		Network.DisconnectedUser.connect(_onUserDisconnect);
-		Network.OnGameWin.connect(_onWin);
+		#Network.OnGameWin.connect(_onWin);
 		Network.OnSpawnShoe.connect(_onShoeFired);
 		Network.OnGameLose.connect(_onLoseCondition);
 		Network.OnRemoveShoe.connect(_onShoeRemove);
@@ -46,27 +46,31 @@ func _onShoeRemove(id: String):
 			return;
 
 func _onLoseCondition(id: String):
-	call_deferred("onLoseDeffered", id);
+	playWinAnimation.rpc();
+	wonBy = id;
 
-func onLoseDeffered(id: String):
+@rpc("any_peer", "call_local")
+func playWinAnimation():
+	$AnimationPlayer.play("Win");
+
+var wonBy = null;
+
+func onWinAnimationEnd():
+	#only run this at server
+	if (!multiplayer.is_server()):
+		return
+
+	if (wonBy == null):
+		return;
+
+	var id = wonBy;
 	gameState = GAME_STATE.PREPARING_FOR_FIGHT;
 	removePlayerFromFight(id);
 	Network.moveClientToEnd(id);
 	var data = Network.getClient(id);
 	createLobbyCharacter(data);
 	addFighterIfNeeded();
-
-func _onWin(id: String):
-	gameState = GAME_STATE.PREPARING_FOR_FIGHT;
-	var players = PlayerSpawner.get_children();
-	for player in players:
-		if (player.name != id):
-			var data = Network.getClient(player.name);
-			PlayerSpawner.remove_child(player);
-			player.queue_free();
-			createLobbyCharacter(data);
-			Network.moveClientToEnd(player.name);
-	addFighterIfNeeded();
+	wonBy = null;
 
 func addFighterIfNeeded():
 	print('attempting to add fighter');
@@ -88,6 +92,7 @@ func addFighterIfNeeded():
 		if (!players.is_empty()):
 			print('not empty');
 			var playerInScene = players[0];
+			playerInScene.changeStateRemotely.rpc(User.PLAYER_STATE.STANDING);
 			if (playerInScene.name == lastClient.name):
 				lastClient = Network.getPreLastClientInQueue();
 				if (lastClient == null):

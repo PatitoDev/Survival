@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d27keetkmapul"]
+[gd_scene load_steps=22 format=3 uid="uid://d27keetkmapul"]
 
 [ext_resource type="Script" path="res://Scenes/Arena/Arena.gd" id="1_tsg4w"]
 [ext_resource type="Texture2D" uid="uid://b0hp57e3nccjw" path="res://Light/lightmap.png" id="3_05v12"]
@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://qld6kyaddjbi" path="res://Scenes/Arena/Img/image.png" id="5_8j4fn"]
 [ext_resource type="PackedScene" uid="uid://x3gs7uy1lqdy" path="res://Entity/StrongDuckStanding/StrongDuckStanding.tscn" id="7_7k7vg"]
 [ext_resource type="PackedScene" uid="uid://ddtkwyrgq26fg" path="res://Entity/StrongDuck/StrongDuck.tscn" id="8_a5auf"]
+[ext_resource type="AudioStream" uid="uid://7gf7txmdxknv" path="res://Scenes/Arena/Sounds/fx-cheering.mp3" id="11_07na0"]
+[ext_resource type="FontFile" uid="uid://d2a5cbt4cly6k" path="res://Font/Pixellari.ttf" id="12_3s4cl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8iwsr"]
 atlas = ExtResource("4_kb6vf")
@@ -38,6 +40,76 @@ size = Vector2(1233, 11)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_63eou"]
 size = Vector2(2283, 20)
+
+[sub_resource type="LabelSettings" id="LabelSettings_g1rme"]
+font = ExtResource("12_3s4cl")
+font_size = 20
+
+[sub_resource type="Animation" id="Animation_tgsyi"]
+resource_name = "Win"
+length = 5.0
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SFX")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("11_07na0")
+}],
+"times": PackedFloat32Array(0.1)
+}
+tracks/0/use_blend = true
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/WinContainer:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.1, 2.3, 4.1, 4.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(1, 1), Vector2(1e-05, 1e-05)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"onWinAnimationEnd"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_sydmd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/WinContainer:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ca8nb"]
+_data = {
+"RESET": SubResource("Animation_sydmd"),
+"Win": SubResource("Animation_tgsyi")
+}
 
 [node name="Main" type="Node2D"]
 texture_filter = 1
@@ -251,20 +323,14 @@ position = Vector2(113, 117)
 sprite_frames = SubResource("SpriteFrames_jngw3")
 frame_progress = 0.974198
 
-[node name="WaitCharacterSpawner" type="Node2D" parent="World"]
-position = Vector2(159, 69)
-
 [node name="StrongDuckStanding" parent="World" instance=ExtResource("7_7k7vg")]
 position = Vector2(282, 94)
 
 [node name="StrongDuckStanding2" parent="World" instance=ExtResource("7_7k7vg")]
 position = Vector2(61, 93)
 
-[node name="StrongDuck" parent="World" instance=ExtResource("8_a5auf")]
-position = Vector2(-66, 148)
-
-[node name="StrongDuck2" parent="World" instance=ExtResource("8_a5auf")]
-position = Vector2(390, 148)
+[node name="WaitCharacterSpawner" type="Node2D" parent="World"]
+position = Vector2(157, 103)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="World"]
 color = Color(0.560784, 0.552941, 0.54902, 1)
@@ -287,16 +353,20 @@ position = Vector2(139.5, 171)
 shape = SubResource("RectangleShape2D_63eou")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="." groups=["wall"]]
+position = Vector2(-288, 0)
 rotation = 1.5708
-collision_layer = 3
+collision_layer = 7
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
 position = Vector2(128, -30.0005)
 shape = SubResource("RectangleShape2D_63eou")
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="." groups=["wall"]]
+position = Vector2(298, 0)
 rotation = 1.5708
-collision_layer = 3
+collision_layer = 7
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
 position = Vector2(139.999, -278.001)
@@ -304,6 +374,21 @@ shape = SubResource("RectangleShape2D_63eou")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
+
+[node name="WinContainer" type="Node2D" parent="CanvasLayer"]
+texture_filter = 1
+position = Vector2(175, 38)
+scale = Vector2(1e-05, 1e-05)
+
+[node name="Label" type="Label" parent="CanvasLayer/WinContainer"]
+offset_left = -46.0
+offset_top = -19.0
+offset_right = 39.0
+offset_bottom = 27.0
+text = "HIT!
+VICTORY"
+label_settings = SubResource("LabelSettings_g1rme")
+horizontal_alignment = 1
 
 [node name="Leaderboard" parent="CanvasLayer" instance=ExtResource("4_qkbl1")]
 visible = false
@@ -332,3 +417,17 @@ texture_filter = 1
 [node name="PlayerSpawner" type="Node2D" parent="CanvasLayer"]
 texture_filter = 1
 position = Vector2(178, 34)
+
+[node name="StrongDuck" parent="CanvasLayer" instance=ExtResource("8_a5auf")]
+position = Vector2(-258, 148)
+
+[node name="StrongDuck2" parent="CanvasLayer" instance=ExtResource("8_a5auf")]
+position = Vector2(576, 149)
+flip_h = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ca8nb")
+}
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]

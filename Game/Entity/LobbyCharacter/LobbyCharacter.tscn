@@ -1,9 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://eynqfwgalpcq"]
+[gd_scene load_steps=16 format=3 uid="uid://eynqfwgalpcq"]
 
 [ext_resource type="Script" path="res://Entity/LobbyCharacter/LobbyCharacter.gd" id="1_1u45g"]
 [ext_resource type="Texture2D" uid="uid://sc7n8khbdqya" path="res://Entity/LobbyCharacter/lobbyCharacter.png" id="2_pq0xn"]
 [ext_resource type="Script" path="res://Entity/LobbyCharacter/Networking.gd" id="3_82gq7"]
+[ext_resource type="Texture2D" uid="uid://cwyvr3ig55vh4" path="res://Entity/LobbyCharacter/patoWalkSmall.png" id="3_mprga"]
 [ext_resource type="FontFile" uid="uid://d2a5cbt4cly6k" path="res://Font/Pixellari.ttf" id="4_nouhv"]
+[ext_resource type="AudioStream" uid="uid://sqhcicchutk3" path="res://Entity/LobbyCharacter/sound/fx_boo_2.wav" id="6_ep4kh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_610dt"]
 atlas = ExtResource("2_pq0xn")
@@ -13,9 +15,13 @@ region = Rect2(0, 0, 16, 15)
 atlas = ExtResource("2_pq0xn")
 region = Rect2(16, 0, 16, 15)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a6l2g"]
-atlas = ExtResource("2_pq0xn")
-region = Rect2(0, 15, 16, 15)
+[sub_resource type="AtlasTexture" id="AtlasTexture_eaiv4"]
+atlas = ExtResource("3_mprga")
+region = Rect2(0, 0, 10, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fecu"]
+atlas = ExtResource("3_mprga")
+region = Rect2(10, 0, 10, 13)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k7b3i"]
 animations = [{
@@ -32,7 +38,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_a6l2g")
+"texture": SubResource("AtlasTexture_eaiv4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2fecu")
 }],
 "loop": true,
 "name": &"walking",
@@ -50,6 +59,12 @@ properties/0/sync = true
 properties/1/path = NodePath(".:syncVelocity")
 properties/1/spawn = true
 properties/1/sync = true
+properties/2/path = NodePath(".:syncDirection")
+properties/2/spawn = true
+properties/2/sync = true
+properties/3/path = NodePath(".:syncState")
+properties/3/spawn = true
+properties/3/sync = true
 
 [sub_resource type="LabelSettings" id="LabelSettings_elxwd"]
 font = ExtResource("4_nouhv")
@@ -71,6 +86,7 @@ script = ExtResource("1_1u45g")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_k7b3i")
 animation = &"walking"
+frame_progress = 0.896089
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_fej3q")
@@ -94,4 +110,13 @@ horizontal_alignment = 1
 replication_config = SubResource("SceneReplicationConfig_ehcis")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -30)
 enabled = false
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_top_margin = 1.0
+drag_bottom_margin = 0.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_ep4kh")

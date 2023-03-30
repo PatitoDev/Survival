@@ -14,7 +14,8 @@ enum PLAYER_STATE {
 	FALLING,
 	THROW_RIGHT,
 	THROW_LEFT,
-	DEATH
+	DEATH,
+	WIN
 }
 
 enum DIRECTION {
@@ -31,6 +32,7 @@ const SPEED = 100.0
 const JUMP_VELOCITY = -400.0
 var SHOE_IMPULSE_FORCE = 600;
 
+@onready var sfxManager = $SFXManager;
 @onready var label = $Label;
 @onready var Sprite = $Sprite;
 @onready var OneShoeSprite = $OneShoe;
@@ -55,6 +57,7 @@ func _ready():
 	updateState();
 	updateShoes(shoes);
 	clientSynchronize.set_multiplayer_authority(name.to_int());
+	$Camera2D.enabled = !isPuppet();
 
 func isPuppet():
 	return clientSynchronize.get_multiplayer_authority() != multiplayer.get_unique_id();
@@ -65,7 +68,7 @@ func updateLabel(text: String):
 func updateState():
 	updateDirection();
 	updateHurtCollision();
-	$HurtBox.monitoring = (playerState != PLAYER_STATE.DEFENDING);
+	#$HurtBox.monitoring = (playerState != PLAYER_STATE.DEFENDING);
 
 	match playerState:
 		PLAYER_STATE.STANDING:
@@ -88,6 +91,8 @@ func updateState():
 			stateMachine.travel('ThrowLeft');
 		PLAYER_STATE.DEATH:
 			stateMachine.travel('OnHurt');
+		PLAYER_STATE.WIN:
+			stateMachine.travel("Win");
 
 func updateHurtCollision():
 	if (playerState == PLAYER_STATE.CROUCHING):
@@ -119,11 +124,15 @@ func _physics_process(delta: float) -> void:
 
 	# Handle Jump.
 	var canMove = (
-		playerState != PLAYER_STATE.ATTACKING_FLOOR &&
+		playerState != PLAYER_STATE.ATTACKING_FLOOR and
 		playerState != PLAYER_STATE.CROUCHING
 	);
 
-	handleMovement(canMove);
+	if (playerState != PLAYER_STATE.DEATH and
+		playerState != PLAYER_STATE.WIN):
+		handleMovement(canMove);
+	else:
+		velocity.x = 0;
 	handleInput();
 
 	# Add the gravity.
@@ -136,7 +145,9 @@ func _physics_process(delta: float) -> void:
 	updateState();
 
 func handleInput():
-	if (playerState != PLAYER_STATE.ATTACKING_FLOOR):
+	if (playerState != PLAYER_STATE.ATTACKING_FLOOR and
+		playerState != PLAYER_STATE.DEATH and
+		playerState != PLAYER_STATE.WIN):
 		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 			velocity.y = JUMP_VELOCITY
 			stateMachine.travel("Jumping");
@@ -208,23 +219,54 @@ func updateSyncData():
 	syncData.syncShoeColor1 = BothShoesSprite.modulate;
 	syncData.syncShoeColor2 = OneShoeSprite.modulate;
 
-func _on_hurt_box_area_entered(area: Area2D) -> void:
-	if (multiplayer.is_server()):
-		if (area.is_in_group('shoe') and area.is_in_group('hit')):
-			# its a shoe!
-			print('has landed');
-			Network.notifyLoseCondition(name);
-			return;
-
-	if (!isPuppet()):
+func checkIfKickWillHit():
+	if (!multiplayer.is_server()):
 		return;
+
+	var willHit = false;
+	var bodies = $KickHitBox.get_overlapping_bodies();
+	for body in bodies:
+		if (body is User and body != self):
+			willHit = true;
+	if (!willHit):
+		sfxManager.playAudio(sfxManager.AUDIO.DODGE);
+
+@rpc('any_peer')
+func changeStateRemotely(newState: PLAYER_STATE):
+	if (isPuppet()):
+		return;
+	playerState = newState;
+
+func _on_hurt_box_area_entered(area: Area2D) -> void:
+	if (!multiplayer.is_server()):
+		return;
+	# handle collisions at server
 
 	if (!area.is_in_group('hit')):
 		return;
 
-	var parent = area.get_parent();
-	if ((parent is User and !parent.isPuppet())):
-		Network.notifyWin.rpc();
+	if (playerState == PLAYER_STATE.DEFENDING):
+		sfxManager.playAudio(sfxManager.AUDIO.BLOCK);
+		return;
+
+	if (area.is_in_group('shoe')):
+		sfxManager.playAudio(sfxManager.AUDIO.HIT);
+		changeStateRemotely.rpc(PLAYER_STATE.DEATH);
+		var players = get_parent().get_children();
+		for player in players:
+			if (player != self):
+				player.changeStateRemotely.rpc(PLAYER_STATE.WIN);
+		Network.notifyLoseCondition(name);
+		return;
+
+	if (area.is_in_group('character')):
+		var user = area.get_parent() as User;
+		if (user == self):
+			return;
+		user.sfxManager.playAudio(sfxManager.AUDIO.HIT);
+		changeStateRemotely.rpc(PLAYER_STATE.DEATH);
+		user.changeStateRemotely.rpc(PLAYER_STATE.WIN);
+		Network.notifyLoseCondition(name);
 
 func _on_grab_area_area_entered(area: Area2D) -> void:
 	if (isPuppet()):
