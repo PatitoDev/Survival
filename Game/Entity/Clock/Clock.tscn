@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://bgbb2gdgqfu1o"]
+
+[ext_resource type="Texture2D" uid="uid://cs2acu5oy3xua" path="res://Entity/Clock/Clock.png" id="1_duh3a"]
+[ext_resource type="Script" path="res://Entity/Clock/Clock.gd" id="1_pipeb"]
+[ext_resource type="FontFile" uid="uid://d2a5cbt4cly6k" path="res://Font/Pixellari.ttf" id="2_tykdp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_h3or1"]
+font = ExtResource("2_tykdp")
+font_size = 8
+font_color = Color(0, 0, 0, 1)
+
+[node name="Clock" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_pipeb")
+
+[node name="Clock" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_duh3a")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -10.0
+offset_top = 2.0
+offset_right = 12.0
+offset_bottom = 13.0
+text = "0"
+label_settings = SubResource("LabelSettings_h3or1")
+horizontal_alignment = 1

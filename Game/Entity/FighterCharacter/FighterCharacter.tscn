@@ -1,11 +1,8 @@
-[gd_scene load_steps=100 format=3 uid="uid://bpguhr3pevh0a"]
+[gd_scene load_steps=98 format=3 uid="uid://bpguhr3pevh0a"]
 
 [ext_resource type="Script" path="res://Entity/FighterCharacter/FighterCharacter.gd" id="1_mifwq"]
 [ext_resource type="FontFile" uid="uid://d2a5cbt4cly6k" path="res://Font/Pixellari.ttf" id="2_4d6ko"]
-[ext_resource type="Shader" path="res://Entity/FighterCharacter/FighterCharacter.gdshader" id="3_pbynk"]
-[ext_resource type="Texture2D" uid="uid://7xfxhi6e5rm2" path="res://Entity/FighterCharacter/Img/spritesheet.png" id="4_ef33u"]
-[ext_resource type="Texture2D" uid="uid://d14o4snvfdr8" path="res://Entity/FighterCharacter/Img/ShShoeBoth.png" id="5_y4o0n"]
-[ext_resource type="Texture2D" uid="uid://cv1pe0v5dmrjw" path="res://Entity/FighterCharacter/Img/ShShoeRightOnly.png" id="6_e8f5v"]
+[ext_resource type="PackedScene" uid="uid://b65kb4xwpcxu2" path="res://Entity/PlayerSprite/PlayerSprite.tscn" id="3_5iade"]
 [ext_resource type="AudioStream" uid="uid://dq2vif0cxb87q" path="res://Entity/FighterCharacter/Audio/fx_dodge_5.wav" id="7_gfv3y"]
 [ext_resource type="AudioStream" uid="uid://claaqca2xvu86" path="res://Entity/FighterCharacter/Audio/fx_agachar.wav" id="7_gwkak"]
 [ext_resource type="Script" path="res://Entity/FighterCharacter/SyncData.gd" id="7_waped"]
@@ -23,14 +20,6 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4sop5"]
 radius = 9.0
 height = 46.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3sa0a"]
-shader = ExtResource("3_pbynk")
-shader_parameter/color = Vector4(0.4, 0.2, 0.3, 5)
-shader_parameter/width = 0.968
-shader_parameter/pattern = 0
-shader_parameter/inside = false
-shader_parameter/add_margins = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2voa"]
 size = Vector2(27, 20)
@@ -55,7 +44,7 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("PlayerSprite/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -79,7 +68,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("OneShoe:frame")
+tracks/2/path = NodePath("PlayerSprite/OneShoe:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -91,7 +80,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("BothShoes:frame")
+tracks/3/path = NodePath("PlayerSprite/BothShoes:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -107,7 +96,7 @@ length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("PlayerSprite/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -119,7 +108,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("OneShoe:frame")
+tracks/1/path = NodePath("PlayerSprite/OneShoe:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -131,7 +120,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("BothShoes:frame")
+tracks/2/path = NodePath("PlayerSprite/BothShoes:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -147,7 +136,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("PlayerSprite/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -159,7 +148,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("OneShoe:frame")
+tracks/1/path = NodePath("PlayerSprite/OneShoe:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -171,7 +160,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("BothShoes:frame")
+tracks/2/path = NodePath("PlayerSprite/BothShoes:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -202,7 +191,7 @@ length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("PlayerSprite/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -214,7 +203,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("OneShoe:frame")
+tracks/1/path = NodePath("PlayerSprite/OneShoe:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -226,7 +215,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("BothShoes:frame")
+tracks/2/path = NodePath("PlayerSprite/BothShoes:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -254,7 +243,7 @@ length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("PlayerSprite/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -266,7 +255,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("OneShoe:frame")
+tracks/1/path = NodePath("PlayerSprite/OneShoe:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -278,7 +267,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("BothShoes:frame")
+tracks/2/path = NodePath("PlayerSprite/BothShoes:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -307,7 +296,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("PlayerSprite/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -319,7 +308,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("OneShoe:frame")
+tracks/1/path = NodePath("PlayerSprite/OneShoe:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -331,7 +320,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("BothShoes:frame")
+tracks/2/path = NodePath("PlayerSprite/BothShoes:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -359,7 +348,7 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("PlayerSprite/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -371,7 +360,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("OneShoe:frame")
+tracks/1/path = NodePath("PlayerSprite/OneShoe:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -383,7 +372,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("BothShoes:frame")
+tracks/2/path = NodePath("PlayerSprite/BothShoes:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -415,7 +404,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("PlayerSprite/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -439,7 +428,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("OneShoe:frame")
+tracks/2/path = NodePath("PlayerSprite/OneShoe:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -451,7 +440,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("BothShoes:frame")
+tracks/3/path = NodePath("PlayerSprite/BothShoes:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -496,7 +485,7 @@ length = 4.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("PlayerSprite/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -508,7 +497,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("OneShoe:frame")
+tracks/1/path = NodePath("PlayerSprite/OneShoe:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -520,7 +509,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("BothShoes:frame")
+tracks/2/path = NodePath("PlayerSprite/BothShoes:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -550,7 +539,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("PlayerSprite/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -586,7 +575,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("OneShoe:frame")
+tracks/3/path = NodePath("PlayerSprite/OneShoe:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -598,7 +587,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("BothShoes:frame")
+tracks/4/path = NodePath("PlayerSprite/BothShoes:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -610,7 +599,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("BothShoes:visible")
+tracks/5/path = NodePath("PlayerSprite/BothShoes:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -622,7 +611,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("OneShoe:visible")
+tracks/6/path = NodePath("PlayerSprite/OneShoe:visible")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -638,7 +627,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("PlayerSprite/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -650,7 +639,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("BothShoes:frame")
+tracks/1/path = NodePath("PlayerSprite/BothShoes:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -662,7 +651,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("OneShoe:frame")
+tracks/2/path = NodePath("PlayerSprite/OneShoe:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -674,7 +663,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("BothShoes:visible")
+tracks/3/path = NodePath("PlayerSprite/BothShoes:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -700,7 +689,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("OneShoe:visible")
+tracks/5/path = NodePath("PlayerSprite/OneShoe:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -731,7 +720,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("PlayerSprite/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -743,7 +732,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("BothShoes:frame")
+tracks/1/path = NodePath("PlayerSprite/BothShoes:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -755,7 +744,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("OneShoe:frame")
+tracks/2/path = NodePath("PlayerSprite/OneShoe:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -767,7 +756,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("BothShoes:visible")
+tracks/3/path = NodePath("PlayerSprite/BothShoes:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -779,7 +768,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("OneShoe:visible")
+tracks/4/path = NodePath("PlayerSprite/OneShoe:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -826,7 +815,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("PlayerSprite/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -838,7 +827,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("OneShoe:frame")
+tracks/1/path = NodePath("PlayerSprite/OneShoe:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -850,7 +839,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("BothShoes:frame")
+tracks/2/path = NodePath("PlayerSprite/BothShoes:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -867,10 +856,34 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("PlayerSprite/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [40, 41, 42, 43, 43]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerSprite/BothShoes:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [40, 41, 42, 43, 43]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PlayerSprite/OneShoe:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
@@ -1031,7 +1044,9 @@ advance_mode = 2
 switch_mode = 2
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gnsb3"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mxnk2"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hde5l"]
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_cbpdl"]
 states/AttackingDown/node = SubResource("AnimationNodeAnimation_el81q")
@@ -1039,31 +1054,31 @@ states/AttackingDown/position = Vector2(-21.7778, -671.427)
 states/Block/node = SubResource("AnimationNodeAnimation_3porp")
 states/Block/position = Vector2(-191.556, -121.481)
 states/Croutch/node = SubResource("AnimationNodeAnimation_4rsxs")
-states/Croutch/position = Vector2(-190.815, -422.222)
+states/Croutch/position = Vector2(-51.4817, -548.222)
 states/End/position = Vector2(720, -130.222)
 states/FallOnGround/node = SubResource("AnimationNodeAnimation_cv7pg")
-states/FallOnGround/position = Vector2(525.333, -344.565)
+states/FallOnGround/position = Vector2(538, -391.232)
 states/Falling/node = SubResource("AnimationNodeAnimation_otftl")
-states/Falling/position = Vector2(519.333, -670.091)
+states/Falling/position = Vector2(1003.33, -934.343)
 states/IDLE/node = SubResource("AnimationNodeAnimation_sq3gj")
-states/IDLE/position = Vector2(483.778, -156.815)
+states/IDLE/position = Vector2(373.111, -163.482)
 states/Jumping/node = SubResource("AnimationNodeAnimation_12gpv")
-states/Jumping/position = Vector2(108.667, -409.802)
+states/Jumping/position = Vector2(-192.815, -1025.8)
 states/Kick/node = SubResource("AnimationNodeAnimation_grm53")
 states/Kick/position = Vector2(-80.6667, 124)
 states/OnHurt/node = SubResource("AnimationNodeAnimation_kmjy1")
-states/OnHurt/position = Vector2(-530.667, -179.111)
-states/Start/position = Vector2(-472, -343.151)
+states/OnHurt/position = Vector2(-613.333, -205.544)
+states/Start/position = Vector2(-624.667, -492.484)
 states/ThrowLeft/node = SubResource("AnimationNodeAnimation_a0tkf")
 states/ThrowLeft/position = Vector2(1267.33, -409.09)
 states/ThrowRight/node = SubResource("AnimationNodeAnimation_4gsrm")
 states/ThrowRight/position = Vector2(908.667, -659)
 states/Walk/node = SubResource("AnimationNodeAnimation_f3knk")
-states/Walk/position = Vector2(445.333, 61.7778)
+states/Walk/position = Vector2(435.333, 123.259)
 states/Win/node = SubResource("AnimationNodeAnimation_fflh6")
-states/Win/position = Vector2(828, 15.6296)
-transitions = ["Jumping", "Falling", SubResource("AnimationNodeStateMachineTransition_gy5vh"), "Falling", "FallOnGround", SubResource("AnimationNodeStateMachineTransition_jhn1f"), "FallOnGround", "IDLE", SubResource("AnimationNodeStateMachineTransition_iqvlm"), "IDLE", "Jumping", SubResource("AnimationNodeStateMachineTransition_kmqob"), "IDLE", "Block", SubResource("AnimationNodeStateMachineTransition_d7tvr"), "Block", "IDLE", SubResource("AnimationNodeStateMachineTransition_ka177"), "Block", "Jumping", SubResource("AnimationNodeStateMachineTransition_y8pms"), "Block", "Kick", SubResource("AnimationNodeStateMachineTransition_gxr7q"), "Kick", "IDLE", SubResource("AnimationNodeStateMachineTransition_g54nh"), "Falling", "AttackingDown", SubResource("AnimationNodeStateMachineTransition_tnb1w"), "AttackingDown", "FallOnGround", SubResource("AnimationNodeStateMachineTransition_rbd00"), "IDLE", "Walk", SubResource("AnimationNodeStateMachineTransition_n4b48"), "Walk", "IDLE", SubResource("AnimationNodeStateMachineTransition_yq8c7"), "Walk", "Jumping", SubResource("AnimationNodeStateMachineTransition_21t5b"), "IDLE", "Win", SubResource("AnimationNodeStateMachineTransition_1h5wt"), "IDLE", "Croutch", SubResource("AnimationNodeStateMachineTransition_ossfr"), "Croutch", "IDLE", SubResource("AnimationNodeStateMachineTransition_8ho03"), "Croutch", "Jumping", SubResource("AnimationNodeStateMachineTransition_edq73"), "Croutch", "Walk", SubResource("AnimationNodeStateMachineTransition_wegtp"), "Croutch", "Kick", SubResource("AnimationNodeStateMachineTransition_4147q"), "Croutch", "Block", SubResource("AnimationNodeStateMachineTransition_jbmcv"), "Block", "Croutch", SubResource("AnimationNodeStateMachineTransition_jrpn1"), "Block", "Walk", SubResource("AnimationNodeStateMachineTransition_ibng0"), "Walk", "Block", SubResource("AnimationNodeStateMachineTransition_seurl"), "IDLE", "Kick", SubResource("AnimationNodeStateMachineTransition_1eoxc"), "Walk", "Croutch", SubResource("AnimationNodeStateMachineTransition_mi0oa"), "Kick", "OnHurt", SubResource("AnimationNodeStateMachineTransition_46l0h"), "Block", "OnHurt", SubResource("AnimationNodeStateMachineTransition_4cso3"), "Croutch", "OnHurt", SubResource("AnimationNodeStateMachineTransition_u6er0"), "Jumping", "OnHurt", SubResource("AnimationNodeStateMachineTransition_7n2u2"), "Falling", "OnHurt", SubResource("AnimationNodeStateMachineTransition_fpl7y"), "FallOnGround", "OnHurt", SubResource("AnimationNodeStateMachineTransition_5u01b"), "IDLE", "OnHurt", SubResource("AnimationNodeStateMachineTransition_qbggh"), "Walk", "OnHurt", SubResource("AnimationNodeStateMachineTransition_8vnmr"), "AttackingDown", "OnHurt", SubResource("AnimationNodeStateMachineTransition_78m4q"), "AttackingDown", "Falling", SubResource("AnimationNodeStateMachineTransition_yqwdx"), "IDLE", "ThrowRight", SubResource("AnimationNodeStateMachineTransition_e3qtm"), "IDLE", "ThrowLeft", SubResource("AnimationNodeStateMachineTransition_i7cjp"), "Walk", "ThrowLeft", SubResource("AnimationNodeStateMachineTransition_10jol"), "Walk", "ThrowRight", SubResource("AnimationNodeStateMachineTransition_1p2b6"), "Croutch", "ThrowRight", SubResource("AnimationNodeStateMachineTransition_dud5q"), "Croutch", "ThrowLeft", SubResource("AnimationNodeStateMachineTransition_cajqv"), "ThrowLeft", "IDLE", SubResource("AnimationNodeStateMachineTransition_tre2t"), "ThrowRight", "IDLE", SubResource("AnimationNodeStateMachineTransition_ss5yj"), "IDLE", "Falling", SubResource("AnimationNodeStateMachineTransition_gnsb3")]
-graph_offset = Vector2(-48, -263)
+states/Win/position = Vector2(1037.33, 62.2963)
+transitions = ["Jumping", "Falling", SubResource("AnimationNodeStateMachineTransition_gy5vh"), "Falling", "FallOnGround", SubResource("AnimationNodeStateMachineTransition_jhn1f"), "FallOnGround", "IDLE", SubResource("AnimationNodeStateMachineTransition_iqvlm"), "IDLE", "Jumping", SubResource("AnimationNodeStateMachineTransition_kmqob"), "IDLE", "Block", SubResource("AnimationNodeStateMachineTransition_d7tvr"), "Block", "IDLE", SubResource("AnimationNodeStateMachineTransition_ka177"), "Block", "Jumping", SubResource("AnimationNodeStateMachineTransition_y8pms"), "Block", "Kick", SubResource("AnimationNodeStateMachineTransition_gxr7q"), "Kick", "IDLE", SubResource("AnimationNodeStateMachineTransition_g54nh"), "Falling", "AttackingDown", SubResource("AnimationNodeStateMachineTransition_tnb1w"), "AttackingDown", "FallOnGround", SubResource("AnimationNodeStateMachineTransition_rbd00"), "IDLE", "Walk", SubResource("AnimationNodeStateMachineTransition_n4b48"), "Walk", "IDLE", SubResource("AnimationNodeStateMachineTransition_yq8c7"), "Walk", "Jumping", SubResource("AnimationNodeStateMachineTransition_21t5b"), "IDLE", "Win", SubResource("AnimationNodeStateMachineTransition_1h5wt"), "IDLE", "Croutch", SubResource("AnimationNodeStateMachineTransition_ossfr"), "Croutch", "IDLE", SubResource("AnimationNodeStateMachineTransition_8ho03"), "Croutch", "Jumping", SubResource("AnimationNodeStateMachineTransition_edq73"), "Croutch", "Walk", SubResource("AnimationNodeStateMachineTransition_wegtp"), "Croutch", "Kick", SubResource("AnimationNodeStateMachineTransition_4147q"), "Croutch", "Block", SubResource("AnimationNodeStateMachineTransition_jbmcv"), "Block", "Croutch", SubResource("AnimationNodeStateMachineTransition_jrpn1"), "Block", "Walk", SubResource("AnimationNodeStateMachineTransition_ibng0"), "Walk", "Block", SubResource("AnimationNodeStateMachineTransition_seurl"), "IDLE", "Kick", SubResource("AnimationNodeStateMachineTransition_1eoxc"), "Walk", "Croutch", SubResource("AnimationNodeStateMachineTransition_mi0oa"), "Kick", "OnHurt", SubResource("AnimationNodeStateMachineTransition_46l0h"), "Block", "OnHurt", SubResource("AnimationNodeStateMachineTransition_4cso3"), "Croutch", "OnHurt", SubResource("AnimationNodeStateMachineTransition_u6er0"), "Jumping", "OnHurt", SubResource("AnimationNodeStateMachineTransition_7n2u2"), "Falling", "OnHurt", SubResource("AnimationNodeStateMachineTransition_fpl7y"), "FallOnGround", "OnHurt", SubResource("AnimationNodeStateMachineTransition_5u01b"), "IDLE", "OnHurt", SubResource("AnimationNodeStateMachineTransition_qbggh"), "Walk", "OnHurt", SubResource("AnimationNodeStateMachineTransition_8vnmr"), "AttackingDown", "OnHurt", SubResource("AnimationNodeStateMachineTransition_78m4q"), "AttackingDown", "Falling", SubResource("AnimationNodeStateMachineTransition_yqwdx"), "IDLE", "ThrowRight", SubResource("AnimationNodeStateMachineTransition_e3qtm"), "IDLE", "ThrowLeft", SubResource("AnimationNodeStateMachineTransition_i7cjp"), "Walk", "ThrowLeft", SubResource("AnimationNodeStateMachineTransition_10jol"), "Walk", "ThrowRight", SubResource("AnimationNodeStateMachineTransition_1p2b6"), "Croutch", "ThrowRight", SubResource("AnimationNodeStateMachineTransition_dud5q"), "Croutch", "ThrowLeft", SubResource("AnimationNodeStateMachineTransition_cajqv"), "ThrowLeft", "IDLE", SubResource("AnimationNodeStateMachineTransition_tre2t"), "ThrowRight", "IDLE", SubResource("AnimationNodeStateMachineTransition_ss5yj"), "ThrowRight", "OnHurt", SubResource("AnimationNodeStateMachineTransition_mxnk2"), "ThrowLeft", "OnHurt", SubResource("AnimationNodeStateMachineTransition_hde5l")]
+graph_offset = Vector2(-638, -1112)
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_14ysa"]
 
@@ -1074,6 +1089,12 @@ properties/0/sync = true
 properties/1/path = NodePath(".:displayName")
 properties/1/spawn = true
 properties/1/sync = true
+properties/2/path = NodePath(".:leftShoeColor")
+properties/2/spawn = true
+properties/2/sync = true
+properties/3/path = NodePath(".:rightShoeColor")
+properties/3/spawn = true
+properties/3/sync = true
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_mhjmm"]
 properties/0/path = NodePath(".:loaded")
@@ -1091,12 +1112,8 @@ properties/3/sync = true
 properties/4/path = NodePath(".:syncShoes")
 properties/4/spawn = true
 properties/4/sync = true
-properties/5/path = NodePath(".:syncShoeColor1")
-properties/5/spawn = true
-properties/5/sync = true
-properties/6/path = NodePath(".:syncShoeColor2")
-properties/6/spawn = true
-properties/6/sync = true
+
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_yh5pp"]
 
 [node name="FighterCharacter" type="CharacterBody2D"]
 texture_filter = 1
@@ -1122,26 +1139,18 @@ shape = SubResource("CapsuleShape2D_4sop5")
 [node name="ShowSpawnerPosition" type="Marker2D" parent="MarkerContainer"]
 position = Vector2(28, -34)
 
-[node name="Sprite" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_3sa0a")
-position = Vector2(0, -24)
-texture = ExtResource("4_ef33u")
-hframes = 10
-vframes = 10
+[node name="PlayerSprite" parent="." instance=ExtResource("3_5iade")]
 
-[node name="BothShoes" type="Sprite2D" parent="."]
+[node name="Sprite" parent="PlayerSprite" index="0"]
+frame = 0
+
+[node name="BothShoes" parent="PlayerSprite" index="1"]
 modulate = Color(0.937255, 0, 0.67451, 1)
-position = Vector2(0, -24)
-texture = ExtResource("5_y4o0n")
-hframes = 10
-vframes = 10
+frame = 0
 
-[node name="OneShoe" type="Sprite2D" parent="."]
+[node name="OneShoe" parent="PlayerSprite" index="2"]
 modulate = Color(0.345098, 0.494118, 1, 1)
-position = Vector2(0, -24)
-texture = ExtResource("6_e8f5v")
-hframes = 10
-vframes = 10
+frame = 0
 
 [node name="GrabArea" type="Area2D" parent="."]
 
@@ -1213,6 +1222,9 @@ editor_draw_drag_margin = true
 script = ExtResource("8_aye3v")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="SFXManager"]
+stream = SubResource("AudioStreamPolyphonic_yh5pp")
 
 [connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+
+[editable path="PlayerSprite"]

@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://v50ny5nqbd7s"]
+
+[ext_resource type="Script" path="res://Entity/OldMan/OldMan.gd" id="2_husax"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_crtrp"]
+size = Vector2(17, 17)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fgm03"]
+size = Vector2(17, 17)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4xabe"]
+size = Vector2(17, 17)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2xcf3"]
+size = Vector2(17, 17)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_my0es"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("PlaceholderTexture2D_crtrp")
+}, {
+"duration": 1.0,
+"texture": SubResource("PlaceholderTexture2D_fgm03")
+}, {
+"duration": 1.0,
+"texture": SubResource("PlaceholderTexture2D_4xabe")
+}, {
+"duration": 1.0,
+"texture": SubResource("PlaceholderTexture2D_2xcf3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="OldMan" type="AnimatedSprite2D"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_my0es")
+frame_progress = 0.828591
+script = ExtResource("2_husax")

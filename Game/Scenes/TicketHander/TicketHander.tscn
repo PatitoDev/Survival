@@ -1,0 +1,208 @@
+[gd_scene load_steps=10 format=3 uid="uid://vf5s2omfe0fi"]
+
+[ext_resource type="Texture2D" uid="uid://cle8kfmb4ejr4" path="res://Scenes/TicketHander/ticket.png" id="1_8bfkk"]
+[ext_resource type="Texture2D" uid="uid://6sxi44hnyiq3" path="res://Scenes/TicketHander/TicketHandler.png" id="1_jjqcj"]
+[ext_resource type="Script" path="res://Scenes/TicketHander/TicketHander.gd" id="1_o7uh3"]
+[ext_resource type="FontFile" uid="uid://d2a5cbt4cly6k" path="res://Font/Pixellari.ttf" id="2_2p81s"]
+[ext_resource type="Texture2D" uid="uid://pqouf6ibs7po" path="res://Scenes/TicketHander/tickethander.png" id="4_a5d4f"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_me3hn"]
+font = ExtResource("2_2p81s")
+font_size = 5
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_rbajo"]
+resource_name = "ticket"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TicketArray:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(148, 91), Vector2(148, 128)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TicketArray/TicketContainer:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.5, 1.9, 2.3, 2.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 17), Vector2(0, 17), Vector2(6, -50)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TicketArray/TicketContainer:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.9, 2.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 3.14159]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TicketArray/TicketContainer:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2.4, 3.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(5, 5)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TicketArray/TicketContainer:z_index")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 2.2, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 0, 5]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(5.9),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"onAnimationFinish"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_12hgl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TicketArray:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(148, 91)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TicketArray/TicketContainer:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TicketArray/TicketContainer:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TicketArray/TicketContainer:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TicketArray/TicketContainer:z_index")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sc71u"]
+_data = {
+"RESET": SubResource("Animation_12hgl"),
+"ticket": SubResource("Animation_rbajo")
+}
+
+[node name="TicketHander" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_o7uh3")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 328.0
+offset_bottom = 184.0
+color = Color(0.215686, 0.164706, 0.223529, 1)
+
+[node name="TicketArray" type="Node2D" parent="."]
+position = Vector2(148, 91)
+
+[node name="Ticket2" type="Sprite2D" parent="TicketArray"]
+position = Vector2(0, -27)
+texture = ExtResource("1_8bfkk")
+
+[node name="TicketContainer" type="Node2D" parent="TicketArray"]
+y_sort_enabled = true
+
+[node name="Ticket" type="Sprite2D" parent="TicketArray/TicketContainer"]
+position = Vector2(0, -1)
+texture = ExtResource("1_8bfkk")
+
+[node name="Label" type="Label" parent="TicketArray/TicketContainer"]
+z_index = 1
+offset_left = 11.0
+offset_top = 0.461548
+offset_right = 33.0
+offset_bottom = 9.46155
+rotation = 3.14159
+text = "12233"
+label_settings = SubResource("LabelSettings_me3hn")
+horizontal_alignment = 1
+
+[node name="TicketHandler" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(160, 83)
+texture = ExtResource("1_jjqcj")
+
+[node name="Tickethander" type="Sprite2D" parent="."]
+z_index = 2
+position = Vector2(160, 61)
+texture = ExtResource("4_a5d4f")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_sc71u")
+}

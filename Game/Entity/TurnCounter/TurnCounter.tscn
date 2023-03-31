@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://dnnygabf1ru2e"]
+
+[ext_resource type="Script" path="res://Entity/TurnCounter/TurnCounter.gd" id="1_oxiis"]
+[ext_resource type="Texture2D" uid="uid://dkcbblkoxmyhd" path="res://Entity/TurnCounter/turntime.png" id="1_xyxh0"]
+[ext_resource type="FontFile" uid="uid://cu5768egjq70t" path="res://Font/Digital7Mono-Yz9J4.ttf" id="2_2ja5c"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_36kau"]
+font = ExtResource("2_2ja5c")
+font_size = 8
+font_color = Color(0, 0.184314, 0.333333, 1)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_snx7h"]
+properties/0/path = NodePath(".:counter")
+properties/0/spawn = true
+properties/0/sync = true
+
+[node name="TurnCounter" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_oxiis")
+
+[node name="Turntime" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_xyxh0")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -8.0
+offset_top = -2.0
+offset_right = 9.0
+offset_bottom = 10.0
+text = "123"
+label_settings = SubResource("LabelSettings_36kau")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_snx7h")

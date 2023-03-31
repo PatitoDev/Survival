@@ -10,3 +10,33 @@ _spawnable_scenes = PackedStringArray("res://Global/UserData/UserData.tscn")
 spawn_path = NodePath("../Connections")
 
 [node name="Connections" type="Node2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 100
+visible = false
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+z_index = 101
+offset_left = 48.0
+offset_top = 36.0
+offset_right = 262.0
+offset_bottom = 62.0
+text = "Unable to connect to server"
+
+[node name="Label2" type="Label" parent="CanvasLayer"]
+z_index = 101
+offset_left = 48.0
+offset_top = 68.0
+offset_right = 262.0
+offset_bottom = 94.0
+text = "Retrying in 5 seconds"
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+z_index = 100
+y_sort_enabled = true
+offset_left = -6.0
+offset_top = -4.0
+offset_right = 326.0
+offset_bottom = 186.0
+color = Color(0.203922, 0.27451, 0.215686, 1)

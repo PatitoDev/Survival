@@ -31,7 +31,7 @@ func _ready():
 func isPuppet():
 	return synchronizer.get_multiplayer_authority() != multiplayer.get_unique_id();
 
-@rpc("any_peer")
+@rpc("any_peer", "call_local")
 func playBoo():
 	$AudioStreamPlayer2D.play();
 

@@ -6,5 +6,3 @@ var syncPosition;
 var syncState;
 var syncDirection;
 var syncShoes;
-var syncShoeColor1;
-var syncShoeColor2;

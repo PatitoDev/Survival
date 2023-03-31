@@ -22,11 +22,15 @@ signal NewRegisteredUser(userData: UserData);
 signal DisconnectedUser(id: int);
 signal OnSpawnShoe(spawnPosition: Vector2, color: Color, impulse: int);
 signal OnRemoveShoe(id: String);
+signal OnShoeColorChange(id: String, color: Color, isLeft: bool);
 
 func _ready():
 	get_window().size = Vector2i(1920 * 1, 1080  * 1);
 
 func _enter_tree():
+	start();
+
+func start():
 	var isPrd = "--prd" in OS.get_cmdline_args();
 	var isServer = "--server" in OS.get_cmdline_args();
 	isPrd = true;
@@ -36,6 +40,7 @@ func _enter_tree():
 		settingsData = settings['prd'];
 
 	startNetwork(isServer, settingsData['port'], settingsData['url']);
+
 
 func startNetwork(isServer: bool, port: int, url: String):
 	#peer = ENetMultiplayerPeer.new();
@@ -50,13 +55,32 @@ func startNetwork(isServer: bool, port: int, url: String):
 		else:
 			print('Error starting server. Code: ', outcome);
 	else:
+		multiplayer.connected_to_server.connect(onConnectionToTheServer);
+		multiplayer.connection_failed.connect(onConnectionToServerFailed);
+		multiplayer.server_disconnected.connect(onConnectionToTheServerLost);
 		#var error = peer.create_client("localhost", port);
 		var outcome = peer.create_client(url);
 		if (outcome == 0):
-			print('Connected to websocket server at: ', url);
+			print('Trying to connect to server: ', url);
 		else:
 			print('Unable to connect to server', url, ' with code: ', outcome);
 	multiplayer.multiplayer_peer = peer;
+
+func onConnectionToTheServerLost():
+	print('lost connection');
+	$CanvasLayer.visible = true;
+	$CanvasLayer/Label.text = "Lost connection to server D:";
+	$CanvasLayer/Label2.text = "";
+
+func onConnectionToTheServer():
+	$CanvasLayer.visible = false;
+	print('successfully connected to server');
+
+func onConnectionToServerFailed():
+	$CanvasLayer.visible = true;
+	var timer = get_tree().create_timer(5);
+	await timer.timeout;
+	start();
 
 # server
 func onClientConnected(id: int):
@@ -67,9 +91,11 @@ func getConnectionsNode():
 
 func onClientDisconnected(id: int):
 	print('Client has disconnected with id:', id);
-	var children = getConnectionsNode().get_children();
+	var connectionNode = getConnectionsNode();
+	var children = connectionNode.get_children();
 	for child in children:
 		if (child.name == str(id)):
+			connectionNode.remove_child(child);
 			child.queue_free();
 	DisconnectedUser.emit(id);
 
@@ -102,6 +128,21 @@ func notifyLoseCondition(id: String):
 	OnGameLose.emit(str(id));
 
 @rpc("any_peer", "call_remote")
+func updateShoe(color: Color, isLeft: bool):
+	if (!multiplayer.is_server()):
+		return
+
+	var id = multiplayer.get_remote_sender_id();
+	var data = getClient(str(id));
+	if (data == null):
+		return;
+	if (isLeft):
+		data.leftShoeColor = color;
+	else:
+		data.rightShoeColor = color;
+	OnShoeColorChange.emit(str(id), color, isLeft);
+
+@rpc("any_peer", "call_remote")
 func notifyWin():
 	if (!multiplayer.is_server()):
 		return;
@@ -127,8 +168,29 @@ func setClientName(displayName: String):
 	newUserData.userQueueNumber = peerCounter;
 	newUserData.displayName = displayName;
 	getConnectionsNode().add_child(newUserData);
+
+@rpc("any_peer", "call_remote")
+func setClientColors(left: Color, right:Color):
+	if (!multiplayer.is_server()):
+		return;
+	print('User picked color: ', left, right);
+	var id = multiplayer.get_remote_sender_id();
+	var data = getClient(str(id));
+	if (data == null):
+		return;
+	data.leftShoeColor = left;
+	data.rightShoeColor = right;
+
+@rpc("any_peer", "call_remote")
+func spawnUser():
+	if (!multiplayer.is_server()):
+		return;
+	var id = multiplayer.get_remote_sender_id();
+	var data = getClient(str(id));
+	if (data == null):
+		return;
 	OnQueueChange.emit();
-	NewRegisteredUser.emit(newUserData);
+	NewRegisteredUser.emit(data);
 
 @rpc("any_peer", "call_remote")
 func spawnShoe(spawnPosition: Vector2, color: Color, impulse: int):

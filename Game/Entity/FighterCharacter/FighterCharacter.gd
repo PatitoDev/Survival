@@ -34,9 +34,9 @@ var SHOE_IMPULSE_FORCE = 600;
 
 @onready var sfxManager = $SFXManager;
 @onready var label = $Label;
-@onready var Sprite = $Sprite;
-@onready var OneShoeSprite = $OneShoe;
-@onready var BothShoesSprite = $BothShoes;
+@onready var Sprite = $PlayerSprite;
+@onready var OneShoeSprite = $PlayerSprite/OneShoe;
+@onready var BothShoesSprite = $PlayerSprite/BothShoes;
 @onready var animationTree: AnimationTree = $AnimationTree;
 @onready var stateMachine = animationTree["parameters/playback"];
 @onready var syncData = $SyncData;
@@ -51,6 +51,8 @@ var shoes = 2;
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 var displayName:String;
 var playerType = PLAYER_TYPE.P1;
+var leftShoeColor:Color = Color.INDIAN_RED;
+var rightShoeColor:Color = Color.INDIAN_RED;
 
 func _ready():
 	updateLabel(displayName);
@@ -106,15 +108,11 @@ func updateDirection():
 	if (direction == DIRECTION.RIGHT):
 		$KickHitBox.transform.x = Vector2(1, 0);
 		$MarkerContainer.transform.x = Vector2(1, 0);
-		Sprite.scale.x = 1;
-		BothShoesSprite.scale.x = 1;
-		OneShoeSprite.scale.x = 1;
+		$PlayerSprite.scale.x = 1;
 	else:
 		$KickHitBox.transform.x = Vector2(-1, 0);
 		$MarkerContainer.transform.x = Vector2(-1, 0);
-		Sprite.scale.x = -1;
-		BothShoesSprite.scale.x = -1;
-		OneShoeSprite.scale.x = -1;
+		$PlayerSprite.scale.x = -1;
 
 func _physics_process(delta: float) -> void:
 	if (isPuppet()):
@@ -138,7 +136,7 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
-		if !Input.is_action_just_pressed("attack"):
+		if !Input.is_action_just_pressed("attack") and playerState != PLAYER_STATE.DEATH and playerState != PLAYER_STATE.WIN:
 			playerState = PLAYER_STATE.FALLING;
 
 	move_and_slide();
@@ -168,15 +166,24 @@ func handleInput():
 					elif shoes == 1:
 						playerState = PLAYER_STATE.THROW_RIGHT;
 
+func changeShoeColor(color: Color, isLeft: bool):
+	if (isLeft):
+		leftShoeColor = color;
+	else:
+		rightShoeColor = color;
+	Network.updateShoe.rpc(color, isLeft);
+
 func addShoe(color: Color):
 	if (shoes == 1):
-		BothShoesSprite.modulate = color;
+		changeShoeColor(color, false);
 	elif (shoes == 0):
-		OneShoeSprite.modulate = color;
+		changeShoeColor(color, true);
 	updateShoes(shoes + 1);
 
 func updateShoes(shoeAmount: int):
 	shoes = shoeAmount;
+	OneShoeSprite.modulate = leftShoeColor;
+	BothShoesSprite.modulate = rightShoeColor;
 	if (shoes == 1):
 		OneShoeSprite.visible = true;
 		BothShoesSprite.visible = false;
@@ -206,8 +213,8 @@ func applySyncData():
 		direction = syncData.syncDirection;
 		playerState = syncData.syncState;
 		updateShoes(syncData.syncShoes);
-		BothShoesSprite.modulate = syncData.syncShoeColor1;
-		OneShoeSprite.modulate = syncData.syncShoeColor2;
+		#BothShoesSprite.modulate = syncData.syncShoeColor1;
+		#OneShoeSprite.modulate = syncData.syncShoeColor2;
 		updateState();
 
 func updateSyncData():
@@ -216,8 +223,8 @@ func updateSyncData():
 	syncData.syncDirection = direction;
 	syncData.syncState = playerState;
 	syncData.loaded = true;
-	syncData.syncShoeColor1 = BothShoesSprite.modulate;
-	syncData.syncShoeColor2 = OneShoeSprite.modulate;
+	#syncData.syncShoeColor1 = BothShoesSprite.modulate;
+	#syncData.syncShoeColor2 = OneShoeSprite.modulate;
 
 func checkIfKickWillHit():
 	if (!multiplayer.is_server()):
@@ -281,9 +288,8 @@ func _on_grab_area_area_entered(area: Area2D) -> void:
 func onLeftShoeThrow():
 	if (isPuppet()):
 		return;
-
 	shoes -= 1;
-	var shoeColor = $BothShoes.modulate;
+	var shoeColor = $PlayerSprite/BothShoes.modulate;
 	var shoeSpawnPosition = shoeSpawnPointer.global_position;
 	var shoeForce = SHOE_IMPULSE_FORCE;
 	if (direction == User.DIRECTION.LEFT):
@@ -293,9 +299,8 @@ func onLeftShoeThrow():
 func onRightShoeThrow():
 	if (isPuppet()):
 		return;
-
 	shoes -= 1;
-	var shoeColor = $OneShoe.modulate;
+	var shoeColor = $PlayerSprite/OneShoe.modulate;
 	var shoeSpawnPosition = shoeSpawnPointer.global_position;
 	var shoeForce = SHOE_IMPULSE_FORCE;
 	if (direction == User.DIRECTION.LEFT):

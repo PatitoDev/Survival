@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://b65kb4xwpcxu2"]
+
+[ext_resource type="Shader" path="res://Entity/FighterCharacter/FighterCharacter.gdshader" id="1_jhwe0"]
+[ext_resource type="Texture2D" uid="uid://7xfxhi6e5rm2" path="res://Entity/FighterCharacter/Img/spritesheet.png" id="2_3xwua"]
+[ext_resource type="Texture2D" uid="uid://d14o4snvfdr8" path="res://Entity/FighterCharacter/Img/ShShoeBoth.png" id="3_yfqf7"]
+[ext_resource type="Texture2D" uid="uid://cv1pe0v5dmrjw" path="res://Entity/FighterCharacter/Img/ShShoeRightOnly.png" id="4_1onap"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3sa0a"]
+shader = ExtResource("1_jhwe0")
+shader_parameter/color = Vector4(0.4, 0.2, 0.3, 5)
+shader_parameter/width = 0.968
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+
+[node name="PlayerSprite" type="Node2D"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_3sa0a")
+position = Vector2(0, -24)
+texture = ExtResource("2_3xwua")
+hframes = 10
+vframes = 10
+frame = 22
+
+[node name="BothShoes" type="Sprite2D" parent="."]
+modulate = Color(0.937255, 0, 0.67451, 1)
+position = Vector2(0, -24)
+texture = ExtResource("3_yfqf7")
+hframes = 10
+vframes = 10
+frame = 22
+
+[node name="OneShoe" type="Sprite2D" parent="."]
+modulate = Color(0.345098, 0.494118, 1, 1)
+position = Vector2(0, -24)
+texture = ExtResource("4_1onap")
+hframes = 10
+vframes = 10
+frame = 22

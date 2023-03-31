@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://d27keetkmapul"]
+[gd_scene load_steps=33 format=3 uid="uid://d27keetkmapul"]
 
 [ext_resource type="Script" path="res://Scenes/Arena/Arena.gd" id="1_tsg4w"]
 [ext_resource type="Texture2D" uid="uid://b0hp57e3nccjw" path="res://Light/lightmap.png" id="3_05v12"]
@@ -7,11 +7,21 @@
 [ext_resource type="Texture2D" uid="uid://bftrmwqbc2xob" path="res://Scenes/Arena/Img/wall.png" id="4_kqj2d"]
 [ext_resource type="Texture2D" uid="uid://bixaa8d6q3elg" path="res://Scenes/Arena/Img/Chair.png" id="4_kxhib"]
 [ext_resource type="PackedScene" uid="uid://c2hfcf5880nfl" path="res://Scenes/Leaderboard/Leaderboard.tscn" id="4_qkbl1"]
+[ext_resource type="Texture2D" uid="uid://b1g2tmv2f26wx" path="res://Entity/NamePoster/Img/portrait4.png" id="5_02vj6"]
 [ext_resource type="Texture2D" uid="uid://qld6kyaddjbi" path="res://Scenes/Arena/Img/image.png" id="5_8j4fn"]
+[ext_resource type="Texture2D" uid="uid://n2udbaojo3ga" path="res://Entity/NamePoster/Img/portrait1.png" id="5_by48g"]
+[ext_resource type="Texture2D" uid="uid://c2wpdole544uc" path="res://Entity/NamePoster/Img/portrait3.png" id="6_6b875"]
+[ext_resource type="Texture2D" uid="uid://b2svhr4iibcxe" path="res://Entity/NamePoster/Img/portrait2.png" id="6_rfuyq"]
 [ext_resource type="PackedScene" uid="uid://x3gs7uy1lqdy" path="res://Entity/StrongDuckStanding/StrongDuckStanding.tscn" id="7_7k7vg"]
 [ext_resource type="PackedScene" uid="uid://ddtkwyrgq26fg" path="res://Entity/StrongDuck/StrongDuck.tscn" id="8_a5auf"]
 [ext_resource type="AudioStream" uid="uid://7gf7txmdxknv" path="res://Scenes/Arena/Sounds/fx-cheering.mp3" id="11_07na0"]
+[ext_resource type="PackedScene" uid="uid://v50ny5nqbd7s" path="res://Entity/OldMan/OldMan.tscn" id="12_2og8d"]
 [ext_resource type="FontFile" uid="uid://d2a5cbt4cly6k" path="res://Font/Pixellari.ttf" id="12_3s4cl"]
+[ext_resource type="PackedScene" uid="uid://b0swr5u632oti" path="res://Entity/NamePoster/NamePoster.tscn" id="12_qcent"]
+[ext_resource type="Texture2D" uid="uid://btnwyjs7jk5tt" path="res://Light/AE5F1SQ.png" id="13_x3syu"]
+[ext_resource type="PackedScene" uid="uid://bgbb2gdgqfu1o" path="res://Entity/Clock/Clock.tscn" id="15_h56va"]
+[ext_resource type="AudioStream" uid="uid://ctlug7hw57736" path="res://Scenes/Arena/Sounds/fx_booing.wav" id="21_c7rt4"]
+[ext_resource type="PackedScene" uid="uid://dnnygabf1ru2e" path="res://Entity/TurnCounter/TurnCounter.tscn" id="22_2s8nw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8iwsr"]
 atlas = ExtResource("4_kb6vf")
@@ -44,6 +54,21 @@ size = Vector2(2283, 20)
 [sub_resource type="LabelSettings" id="LabelSettings_g1rme"]
 font = ExtResource("12_3s4cl")
 font_size = 20
+
+[sub_resource type="Animation" id="Animation_sydmd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/WinContainer:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
 
 [sub_resource type="Animation" id="Animation_tgsyi"]
 resource_name = "Win"
@@ -90,23 +115,54 @@ tracks/2/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_sydmd"]
-length = 0.001
-tracks/0/type = "value"
+[sub_resource type="Animation" id="Animation_cagjo"]
+resource_name = "Draw"
+length = 5.0
+tracks/0/type = "audio"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/WinContainer:scale")
+tracks/0/path = NodePath("SFX")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("21_c7rt4")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/DrawContainer:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.1, 2.3, 4.1, 4.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(1e-05, 1e-05)]
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(1, 1), Vector2(1e-05, 1e-05)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"onDrawAnimationEnd"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ca8nb"]
 _data = {
+"Draw": SubResource("Animation_cagjo"),
 "RESET": SubResource("Animation_sydmd"),
 "Win": SubResource("Animation_tgsyi")
 }
@@ -136,6 +192,13 @@ offset_right = 1234.0
 offset_bottom = 203.0
 color = Color(0.215686, 0.164706, 0.223529, 1)
 
+[node name="Bg2" type="ColorRect" parent="World"]
+offset_left = -997.0
+offset_top = 97.0
+offset_right = 1234.0
+offset_bottom = 203.0
+color = Color(0.25098, 0.196078, 0.258824, 1)
+
 [node name="Ceilling" type="ColorRect" parent="World"]
 offset_left = -1037.0
 offset_top = -486.0
@@ -148,6 +211,12 @@ offset_top = 138.0
 offset_right = 1253.0
 offset_bottom = 402.0
 color = Color(0.388235, 0.364706, 0.270588, 1)
+
+[node name="TurnCounter" parent="World" instance=ExtResource("22_2s8nw")]
+position = Vector2(129, 24)
+
+[node name="Clock" parent="World" instance=ExtResource("15_h56va")]
+position = Vector2(156, 23)
 
 [node name="Wall" type="Node2D" parent="World"]
 
@@ -246,6 +315,111 @@ position = Vector2(559, 7)
 [node name="Light5" parent="World" instance=ExtResource("4_3b16k")]
 position = Vector2(843, 7)
 
+[node name="Posters" type="Node2D" parent="World"]
+modulate = Color(0.713726, 0.690196, 0.611765, 1)
+position = Vector2(1, 21)
+scale = Vector2(0.7, 0.7)
+
+[node name="Portrait5" type="Sprite2D" parent="World/Posters"]
+position = Vector2(-52.8571, 47.1429)
+rotation = -0.138494
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_02vj6")
+
+[node name="Portrait6" type="Sprite2D" parent="World/Posters"]
+position = Vector2(607.143, 62.8571)
+rotation = -0.252537
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_6b875")
+
+[node name="Portrait7" type="Sprite2D" parent="World/Posters"]
+position = Vector2(-384.286, 58.5714)
+rotation = -0.0377692
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_6b875")
+
+[node name="Portrait1" type="Sprite2D" parent="World/Posters"]
+position = Vector2(180, 59)
+rotation = -0.204351
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_by48g")
+
+[node name="Portrait3" type="Sprite2D" parent="World/Posters"]
+position = Vector2(318, 70)
+rotation = 0.200229
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_by48g")
+
+[node name="Portrait2" type="Sprite2D" parent="World/Posters"]
+position = Vector2(22, 53)
+rotation = 0.127537
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_rfuyq")
+
+[node name="Portrait4" type="Sprite2D" parent="World/Posters"]
+position = Vector2(-176, 61)
+rotation = -0.046425
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_rfuyq")
+
+[node name="NamePoster" parent="World/Posters" instance=ExtResource("12_qcent")]
+position = Vector2(-232, 46)
+rotation = -0.198162
+scale = Vector2(1, 1)
+
+[node name="Label2" parent="World/Posters/NamePoster" index="2"]
+text = "SyntaxError"
+
+[node name="NamePoster2" parent="World/Posters" instance=ExtResource("12_qcent")]
+position = Vector2(439, 50)
+rotation = 0.177797
+scale = Vector2(1, 1)
+
+[node name="Label" parent="World/Posters/NamePoster2" index="1"]
+text = "al3_s1mp
+altaskur
+snowdrive1
+hellsing2030
+Tokio_pilot
+RuiLexy
+Ccsavlad
+Napstal"
+
+[node name="Label2" parent="World/Posters/NamePoster2" index="2"]
+text = "UnityLovers"
+
+[node name="NamePoster3" parent="World/Posters" instance=ExtResource("12_qcent")]
+position = Vector2(206, 56)
+rotation = 0.441579
+
+[node name="Label" parent="World/Posters/NamePoster3" index="1"]
+text = "quesocaliente0
+ckmu32
+GariCarandai
+Raupulus
+Hugok2k
+AlexElLeon969
+shmebulok101
+WorstKatEUW"
+
+[node name="Label2" parent="World/Posters/NamePoster3" index="2"]
+text = "HaskelGang"
+
+[node name="NamePoster4" parent="World/Posters" instance=ExtResource("12_qcent")]
+position = Vector2(11, 45)
+rotation = -0.240285
+
+[node name="Label" parent="World/Posters/NamePoster4" index="1"]
+text = "ManzDev 
+ZevaCodigo
+eduardo_mc21
+danielespitia2022
+zampaefes
+"
+
+[node name="Label2" parent="World/Posters/NamePoster4" index="2"]
+text = "Goose Evil Corp."
+
 [node name="Chair" type="Node2D" parent="World"]
 position = Vector2(0, -4)
 
@@ -323,6 +497,9 @@ position = Vector2(113, 117)
 sprite_frames = SubResource("SpriteFrames_jngw3")
 frame_progress = 0.974198
 
+[node name="OldMan" parent="World" instance=ExtResource("12_2og8d")]
+position = Vector2(-195, 95)
+
 [node name="StrongDuckStanding" parent="World" instance=ExtResource("7_7k7vg")]
 position = Vector2(282, 94)
 
@@ -331,6 +508,12 @@ position = Vector2(61, 93)
 
 [node name="WaitCharacterSpawner" type="Node2D" parent="World"]
 position = Vector2(157, 103)
+
+[node name="Ae5f1sq" type="Sprite2D" parent="World"]
+modulate = Color(1, 1, 1, 0.196078)
+position = Vector2(229, 26.5)
+scale = Vector2(1.36563, 0.180556)
+texture = ExtResource("13_x3syu")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="World"]
 color = Color(0.560784, 0.552941, 0.54902, 1)
@@ -377,16 +560,30 @@ follow_viewport_enabled = true
 
 [node name="WinContainer" type="Node2D" parent="CanvasLayer"]
 texture_filter = 1
-position = Vector2(175, 38)
+position = Vector2(175, 53)
 scale = Vector2(1e-05, 1e-05)
 
 [node name="Label" type="Label" parent="CanvasLayer/WinContainer"]
-offset_left = -46.0
-offset_top = -19.0
-offset_right = 39.0
-offset_bottom = 27.0
-text = "HIT!
+offset_left = -79.0
+offset_top = 11.0
+offset_right = 41.0
+offset_bottom = 57.0
+text = "
 VICTORY"
+label_settings = SubResource("LabelSettings_g1rme")
+horizontal_alignment = 1
+
+[node name="DrawContainer" type="Node2D" parent="CanvasLayer"]
+texture_filter = 1
+position = Vector2(159, 74)
+scale = Vector2(1e-05, 1e-05)
+
+[node name="Label" type="Label" parent="CanvasLayer/DrawContainer"]
+offset_left = -64.0
+offset_top = -10.0
+offset_right = 56.0
+offset_bottom = 36.0
+text = "Draw"
 label_settings = SubResource("LabelSettings_g1rme")
 horizontal_alignment = 1
 
@@ -416,7 +613,7 @@ texture_filter = 1
 
 [node name="PlayerSpawner" type="Node2D" parent="CanvasLayer"]
 texture_filter = 1
-position = Vector2(178, 34)
+position = Vector2(178, 113)
 
 [node name="StrongDuck" parent="CanvasLayer" instance=ExtResource("8_a5auf")]
 position = Vector2(-258, 148)
@@ -431,3 +628,8 @@ libraries = {
 }
 
 [node name="SFX" type="AudioStreamPlayer" parent="."]
+
+[editable path="World/Posters/NamePoster"]
+[editable path="World/Posters/NamePoster2"]
+[editable path="World/Posters/NamePoster3"]
+[editable path="World/Posters/NamePoster4"]

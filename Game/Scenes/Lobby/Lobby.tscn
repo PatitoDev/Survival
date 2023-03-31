@@ -1,12 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://bnfy2ihtvu6xx"]
+[gd_scene load_steps=18 format=3 uid="uid://bnfy2ihtvu6xx"]
 
 [ext_resource type="Script" path="res://Scenes/Lobby/Lobby.gd" id="1_t7f2o"]
 [ext_resource type="Texture2D" uid="uid://bv0w04j8twa6k" path="res://Scenes/Lobby/formstack.png" id="2_2t7fx"]
 [ext_resource type="FontFile" uid="uid://d2a5cbt4cly6k" path="res://Font/Pixellari.ttf" id="2_8hyq3"]
 [ext_resource type="PackedScene" uid="uid://d27keetkmapul" path="res://Scenes/Arena/Arena.tscn" id="2_cyuyj"]
 [ext_resource type="Texture2D" uid="uid://dx16qmbvp3eih" path="res://Scenes/Lobby/table2.png" id="2_shrqe"]
+[ext_resource type="PackedScene" uid="uid://3wb30ss8or2c" path="res://Scenes/ShoePicker/ShoePicker.tscn" id="3_t18j3"]
 [ext_resource type="FontFile" uid="uid://teimplwodatw" path="res://Font/Creattion Demo.otf" id="4_a3gxt"]
 [ext_resource type="Texture2D" uid="uid://5l4pf28t2u2p" path="res://Scenes/Lobby/ticket.png" id="5_7p88y"]
+[ext_resource type="PackedScene" uid="uid://vf5s2omfe0fi" path="res://Scenes/TicketHander/TicketHander.tscn" id="9_n25hv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_du8bq"]
 
@@ -33,10 +35,24 @@ script = ExtResource("1_t7f2o")
 
 [node name="Main" parent="." instance=ExtResource("2_cyuyj")]
 
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="ShoePicker" parent="CanvasLayer2" instance=ExtResource("3_t18j3")]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 2
+layer = 4
+follow_viewport_enabled = true
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_left = -16.0
+offset_top = -7.0
+offset_right = 335.0
+offset_bottom = 192.0
+color = Color(0.141176, 0.101961, 0.145098, 1)
 
 [node name="Menu" type="Node2D" parent="CanvasLayer"]
+position = Vector2(44, 0)
 
 [node name="Table2" type="Sprite2D" parent="CanvasLayer/Menu"]
 position = Vector2(118, 90)
@@ -86,6 +102,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_ad0gc")
 disabled = true
 
 [node name="Ticket" type="Sprite2D" parent="CanvasLayer/Menu"]
+visible = false
 position = Vector2(285, 28)
 texture = ExtResource("5_7p88y")
 
@@ -98,5 +115,13 @@ text = "12"
 label_settings = SubResource("LabelSettings_2gqk6")
 horizontal_alignment = 1
 
+[node name="CanvasLayer3" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="TicketHander" parent="CanvasLayer3" instance=ExtResource("9_n25hv")]
+
+[connection signal="pressed" from="CanvasLayer2/ShoePicker/Button" to="." method="onShoePickerEnd"]
 [connection signal="text_changed" from="CanvasLayer/Menu/FormStack/LineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="pressed" from="CanvasLayer/Menu/FormStack/Button" to="." method="_on_button_pressed"]
+
+[editable path="CanvasLayer2/ShoePicker"]

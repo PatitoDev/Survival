@@ -18,7 +18,7 @@ enum AUDIO {
 func playAudio(id:AUDIO):
 	_playAudio.rpc(id);
 
-@rpc('any_peer')
+@rpc('any_peer', 'call_local')
 func _playAudio(id):
 	match id:
 		AUDIO.CROUTCH:
