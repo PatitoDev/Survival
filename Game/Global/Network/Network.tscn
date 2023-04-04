@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dp0xpqcsybyjt"]
+[gd_scene load_steps=3 format=3 uid="uid://dp0xpqcsybyjt"]
 
 [ext_resource type="Script" path="res://Global/Network/Network.gd" id="1_0rj8i"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ld4fi"]
+properties/0/path = NodePath(".:ranking")
+properties/0/spawn = true
+properties/0/sync = true
 
 [node name="Network" type="Node2D"]
 script = ExtResource("1_0rj8i")
@@ -40,3 +45,6 @@ offset_top = -4.0
 offset_right = 326.0
 offset_bottom = 186.0
 color = Color(0.203922, 0.27451, 0.215686, 1)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ld4fi")

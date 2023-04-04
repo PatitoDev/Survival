@@ -26,6 +26,9 @@ func _ready():
 		Network.OnRemoveShoe.connect(_onShoeRemove);
 		Network.OnShoeColorChange.connect(_onShoeColorChange);
 
+func updateLeaderboard():
+	$World/Leaderboard.updateLeaderboard();
+
 # execute server
 func _onNewUser(data: UserData):
 	var hasCreated = addFighterIfNeeded();
@@ -49,19 +52,22 @@ func _onShoeRemove(id: String):
 
 func _onLoseCondition(id: String):
 	playWinAnimation.rpc();
-	wonBy = id;
+	lostBy = id;
 	if timer != null:
 		timer.timeout.disconnect(whenTimerEnds);
 
 @rpc("any_peer", "call_local")
 func playWinAnimation():
+	print('received win animation play');
+	$AnimationPlayer.stop();
 	$AnimationPlayer.play("Win");
 
-var wonBy = null;
+var lostBy = null;
 
 func onDrawAnimationEnd():
 	if (!multiplayer.is_server()):
 		return;
+	print('win animation end');
 
 	print('draw end');
 	var players = PlayerSpawner.get_children();
@@ -81,18 +87,27 @@ func onWinAnimationEnd():
 	if (!multiplayer.is_server()):
 		return
 
-	if (wonBy == null):
+	if (lostBy == null):
 		return;
 
-	var id = wonBy;
 	gameState = GAME_STATE.PREPARING_FOR_FIGHT;
-	removePlayerFromFight(id);
-	Network.moveClientToEnd(id);
-	var data = Network.getClient(id);
+	removePlayerFromFight(lostBy);
+	Network.moveClientToEnd(lostBy);
+
+	#get winner
+	var winner = null;
+	var children = PlayerSpawner.get_children();
+	for child in children:
+		if child.name != lostBy:
+			winner = child.name;
+	if (winner != null):
+		Network.saveWin(winner);
+	var data = Network.getClient(lostBy);
 	createLobbyCharacter(data);
 	addFighterIfNeeded();
 	cleanShoes();
-	wonBy = null;
+	lostBy = null;
+	$World/Leaderboard.updateLeaderboard.rpc();
 
 func cleanShoes():
 	var children = $CanvasLayer/ShoeSpawner.get_children();
@@ -165,6 +180,7 @@ func _onUserDisconnect(id: int):
 	var hasRemoved = removePlayerFromFight(str(id));
 	if (hasRemoved):
 		gameState = GAME_STATE.PREPARING_FOR_FIGHT;
+		addFighterIfNeeded();
 
 func removePlayerFromWaitLobby(id: String) -> bool:
 	var children = WaitCharacterSpawner.get_children();
@@ -197,7 +213,7 @@ func whenTimerEnds():
 	if (!multiplayer.is_server()):
 		return;
 
-	if (wonBy != null):
+	if (lostBy != null):
 		return;
 	print('game time has run out');
 	$AnimationPlayer.play('Draw');

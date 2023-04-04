@@ -1145,11 +1145,9 @@ position = Vector2(28, -34)
 frame = 0
 
 [node name="BothShoes" parent="PlayerSprite" index="1"]
-modulate = Color(0.937255, 0, 0.67451, 1)
 frame = 0
 
 [node name="OneShoe" parent="PlayerSprite" index="2"]
-modulate = Color(0.345098, 0.494118, 1, 1)
 frame = 0
 
 [node name="GrabArea" type="Area2D" parent="."]

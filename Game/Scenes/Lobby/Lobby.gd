@@ -22,3 +22,4 @@ func _on_button_pressed() -> void:
 func onShoePickerEnd():
 	var player = Network.getClient(str(multiplayer.get_unique_id()));
 	$CanvasLayer3/TicketHander.setNumber(str(player.userQueueNumber));
+	$Main.updateLeaderboard();

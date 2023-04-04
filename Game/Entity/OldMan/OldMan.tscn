@@ -2,32 +2,32 @@
 
 [ext_resource type="Script" path="res://Entity/OldMan/OldMan.gd" id="2_husax"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_crtrp"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ay77h"]
 size = Vector2(17, 17)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fgm03"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_phxc2"]
 size = Vector2(17, 17)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4xabe"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_cqwoc"]
 size = Vector2(17, 17)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2xcf3"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1c1ci"]
 size = Vector2(17, 17)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_my0es"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("PlaceholderTexture2D_crtrp")
+"texture": SubResource("PlaceholderTexture2D_ay77h")
 }, {
 "duration": 1.0,
-"texture": SubResource("PlaceholderTexture2D_fgm03")
+"texture": SubResource("PlaceholderTexture2D_phxc2")
 }, {
 "duration": 1.0,
-"texture": SubResource("PlaceholderTexture2D_4xabe")
+"texture": SubResource("PlaceholderTexture2D_cqwoc")
 }, {
 "duration": 1.0,
-"texture": SubResource("PlaceholderTexture2D_2xcf3")
+"texture": SubResource("PlaceholderTexture2D_1c1ci")
 }],
 "loop": true,
 "name": &"default",

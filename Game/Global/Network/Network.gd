@@ -26,6 +26,9 @@ signal OnShoeColorChange(id: String, color: Color, isLeft: bool);
 
 func _ready():
 	get_window().size = Vector2i(1920 * 1, 1080  * 1);
+	var isServer = "--server" in OS.get_cmdline_args();
+	if (isServer):
+		loadScore();
 
 func _enter_tree():
 	start();
@@ -141,6 +144,63 @@ func updateShoe(color: Color, isLeft: bool):
 	else:
 		data.rightShoeColor = color;
 	OnShoeColorChange.emit(str(id), color, isLeft);
+
+var _score = {
+};
+var ranking = {
+	'first': null,
+	'second': null,
+	'third': null
+};
+
+const SAVE_FILE_PATH = "user://score.save";
+
+func saveWin(id: String):
+	var player = getClient(id);
+	if (player == null):
+		return;
+
+	var playerId = player.displayName + "_user";
+	if (_score.get(playerId) == null):
+		_score[playerId] = {
+			'score': 1,
+			'playerName': player.displayName
+		};
+	else:
+		_score[playerId]['score'] += 1;
+	updateRanking();
+	var file = FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE);
+	var toSave = JSON.stringify(_score);
+	file.store_string(toSave);
+	file.close();
+
+func loadScore():
+	if FileAccess.file_exists(SAVE_FILE_PATH):
+		print("save file found")
+		var file = FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
+		var loadedFile: Variant = file.get_as_text();
+		file.close();
+		var data = JSON.parse_string(loadedFile);
+		print(data);
+		_score = data;
+		updateRanking();
+	else:
+		print("save file not found")
+		_score = {};
+
+func updateRanking():
+	var data = _score.values();
+	data.sort_custom(func (a,b): return a.score > b.score);
+	print('sorted ', data);
+	var first = data.pop_front();
+	if (first != null):
+		ranking['first'] = first;
+	var second = data.pop_front();
+	if (second != null):
+		ranking['second'] = second;
+	var third = data.pop_front();
+	if (third != null):
+		ranking['third'] = third;
 
 @rpc("any_peer", "call_remote")
 func notifyWin():
